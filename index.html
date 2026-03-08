@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -1546,8 +1546,7 @@
       <h1 class="home-company">AImpact4SMEs</h1>
       <nav class="home-menu" aria-label="Homepage sections">
         <button type="button" class="home-menu-link" data-home-target="homeAbout">About us</button>
-        <button type="button" class="home-menu-link" data-home-target="homePricing">Pricing</button>
-        <button type="button" class="home-menu-link" data-home-target="homeFeatures">Features</button>
+        <button type="button" class="home-menu-link" data-home-target="homeDifference">Features</button>
         <button type="button" class="home-menu-link" data-home-target="homeContact">Contact</button>
       </nav>
       <a class="home-login" href="#login">Login</a>
@@ -1598,36 +1597,6 @@
           <p>Get direct onboarding, practical optimization guidance, and responsive support channels that help teams sustain adoption after launch.</p>
         </article>
       </div>
-    </section>
-
-    <section id="homeFeatures" class="home-info-grid" aria-label="Features overview">
-      <article class="home-card" data-bubble>
-        <h3>Unified Performance View</h3>
-        <p>Monitor project progress, cost efficiency, and risk status in real time with actionable AI summaries for managers and leadership.</p>
-      </article>
-      <article class="home-card" data-bubble>
-        <h3>Practical ESG Tracking</h3>
-        <p>Measure environmental, social, and governance indicators with dashboards that teams can actually use day to day.</p>
-      </article>
-      <article class="home-card" data-bubble>
-        <h3>Fast Deployment</h3>
-        <p>Launch quickly with lightweight setup, secure API integrations, and role-ready templates for operations, finance, and compliance.</p>
-      </article>
-    </section>
-
-    <section class="home-info-grid" aria-label="Pricing">
-      <article id="homePricing" class="home-card" data-bubble>
-        <h3>Pricing</h3>
-        <p>Starter for small teams, Growth for multi-site operators, and Scale for advanced integrations. Transparent monthly billing.</p>
-      </article>
-      <article class="home-card" data-bubble>
-        <h3>Deployment</h3>
-        <p>Go live in days with your existing workflows, then scale modules gradually as teams adopt automated decision support.</p>
-      </article>
-      <article class="home-card" data-bubble>
-        <h3>Security</h3>
-        <p>Role-based access, audit trails, and integration controls designed to fit SME governance and compliance expectations.</p>
-      </article>
     </section>
 
     <footer class="home-footer" aria-label="About and contact">
@@ -3441,7 +3410,7 @@
       });
 
       goFeaturesBtn.addEventListener('click', function () {
-        const section = document.getElementById('homeFeatures');
+        const section = document.getElementById('homeDifference');
         if (section) {
           section.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
