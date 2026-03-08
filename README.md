@@ -1,1 +1,3527 @@
 # AImpact4SMEs.github.io
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AImpact4SMEs | Login</title>
+  <style>
+    :root {
+      --page-max-width: 1280px;
+      --bg-start: #eaf1ff;
+      --bg-mid: #d6e3fb;
+      --bg-end: #c1d4f5;
+      --surface: #f3f7ff;
+      --ink: #102748;
+      --muted: #4a638a;
+      --primary: #1d4da1;
+      --primary-strong: #173d80;
+      --danger: #c93f45;
+      --ok: #2b7f57;
+      --ring: rgba(29, 77, 161, 0.24);
+      --line: #b6c8e8;
+      --soft: #dce7fa;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Plus Jakarta Sans", "Avenir Next", "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: linear-gradient(155deg, var(--bg-start) 0%, var(--bg-mid) 54%, var(--bg-end) 100%);
+      background-size: 220% 220%;
+      animation: flowingGradient 14s ease-in-out infinite;
+      display: block;
+      padding: 94px 24px 24px;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+
+    body.app-with-subnav {
+      padding-left: 292px;
+    }
+
+    body.home-mode {
+      padding: 0;
+    }
+
+    @keyframes flowingGradient {
+      0% {
+        background-position: 0% 0%, 100% 100%, 0% 50%;
+      }
+      50% {
+        background-position: 22% 18%, 78% 82%, 100% 50%;
+      }
+      100% {
+        background-position: 0% 0%, 100% 100%, 0% 50%;
+      }
+    }
+
+    @keyframes brandGradientFlow {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .auth-shell,
+    .home-shell,
+    .dashboard-shell,
+    .reports-shell {
+      position: relative;
+      z-index: 1;
+      margin: 0 auto;
+    }
+
+    .page-enter {
+      animation: pageFadeInUp 460ms cubic-bezier(0.22, 0.8, 0.24, 1);
+      will-change: opacity, transform;
+    }
+
+    .bubble-enter {
+      opacity: 0;
+      animation: bubbleFadeInUp 520ms cubic-bezier(0.22, 0.8, 0.24, 1) forwards;
+      animation-delay: var(--bubble-delay, 0ms);
+      will-change: opacity, transform;
+    }
+
+    @keyframes pageFadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes bubbleFadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(16px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .auth-shell {
+      width: min(920px, 100%);
+      background: var(--surface);
+      border: 1px solid rgba(61, 86, 108, 0.22);
+      border-radius: 8px;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      box-shadow: 0 4px 16px rgba(16, 35, 52, 0.14);
+    }
+
+    .home-shell {
+      width: 100%;
+      min-height: 100vh;
+      padding-top: 72px;
+      background: transparent;
+      border: 0;
+      border-radius: 0;
+      box-shadow: none;
+      display: grid;
+      gap: 0;
+    }
+
+    .home-topbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 11;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 16px;
+      padding: 12px 24px;
+      background: rgba(255, 255, 255, 0.9);
+      border-bottom: 1px solid rgba(171, 191, 224, 0.45);
+      backdrop-filter: blur(8px);
+    }
+
+    .home-company {
+      margin: 0;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #15386f;
+      letter-spacing: 0.01em;
+    }
+
+    .home-menu {
+      display: inline-flex;
+      gap: 8px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .home-menu-link {
+      border: 0;
+      background: transparent;
+      color: #214b91;
+      border-radius: 0;
+      padding: 10px 12px;
+      font: inherit;
+      font-size: 0.86rem;
+      font-weight: 600;
+      cursor: pointer;
+      line-height: 1.2;
+      text-decoration: none;
+    }
+
+    .home-menu-link:hover,
+    .home-menu-link:focus-visible {
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+
+    .home-login {
+      justify-self: end;
+      text-decoration: none;
+      border: 0;
+      background: transparent;
+      color: #1d4da1;
+      border-radius: 0;
+      padding: 10px 14px;
+      font-size: 0.86rem;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .home-login:hover,
+    .home-login:focus-visible {
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+
+    .home-hero {
+      min-height: 62.5vh;
+      display: grid;
+      grid-template-columns: 1.06fr 0.94fr;
+      gap: 18px;
+      border-radius: 0;
+      padding: clamp(22px, 3.1vw, 42px);
+      background: linear-gradient(140deg, #1d4da1 0%, #2c61bf 58%, #5e8dd8 100%);
+      color: #eef5ff;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .home-hero-copy {
+      display: grid;
+      align-content: center;
+      gap: 14px;
+      padding-left: clamp(44px, 7vw, 140px);
+      position: relative;
+      z-index: 2;
+    }
+
+    .home-kicker {
+      margin: 0;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: rgba(237, 245, 255, 0.82);
+      font-weight: 700;
+    }
+
+    .home-hero-copy h1 {
+      margin: 0;
+      font-size: clamp(2rem, 4.2vw, 3.6rem);
+      line-height: 1.05;
+      max-width: 18ch;
+      letter-spacing: -0.02em;
+    }
+
+    .home-catchphrase .hero-word {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(16px);
+      filter: blur(2px);
+    }
+
+    .home-catchphrase.is-animating .hero-word {
+      animation: homeWordRiseFade 620ms cubic-bezier(0.22, 0.8, 0.24, 1) forwards;
+      animation-delay: calc(var(--word-delay, 0) * 80ms);
+    }
+
+    @keyframes homeWordRiseFade {
+      from {
+        opacity: 0;
+        transform: translateY(16px);
+        filter: blur(2px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+      }
+    }
+
+    .home-subtitle {
+      margin: 0;
+      max-width: 44ch;
+      line-height: 1.58;
+      color: rgba(234, 243, 255, 0.95);
+    }
+
+    .home-hero-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 4px;
+    }
+
+    .home-hero-media {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: min(56%, 860px);
+      z-index: 1;
+    }
+
+    .home-hero-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center right;
+      display: block;
+      -webkit-mask-image: linear-gradient(
+        to right,
+        rgba(0, 0, 0, 0) 0%,
+        rgba(0, 0, 0, 0.14) 20%,
+        rgba(0, 0, 0, 0.52) 34%,
+        rgba(0, 0, 0, 0.86) 48%,
+        rgba(0, 0, 0, 1) 60%,
+        rgba(0, 0, 0, 1) 100%
+      );
+      mask-image: linear-gradient(
+        to right,
+        rgba(0, 0, 0, 0) 0%,
+        rgba(0, 0, 0, 0.14) 20%,
+        rgba(0, 0, 0, 0.52) 34%,
+        rgba(0, 0, 0, 0.86) 48%,
+        rgba(0, 0, 0, 1) 60%,
+        rgba(0, 0, 0, 1) 100%
+      );
+    }
+
+    .home-info-grid {
+      display: grid;
+      gap: 14px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      padding: 22px 24px;
+    }
+
+    .home-difference {
+      padding: 26px 0 8px;
+    }
+
+    .home-difference h2 {
+      margin: 0 0 14px;
+      font-size: clamp(1.5rem, 2.6vw, 2rem);
+      color: #15386f;
+      letter-spacing: -0.01em;
+      text-transform: capitalize;
+      text-align: center;
+    }
+
+    .home-diff-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1px;
+      padding: 1px;
+    }
+
+    .home-diff-box {
+      border: 1px solid rgba(170, 191, 225, 0.45);
+      background: rgba(255, 255, 255, 0.72);
+      border-radius: 0;
+      padding: 14px;
+      min-height: 138px;
+      transition: transform 160ms ease;
+      transform-origin: center;
+      will-change: transform;
+    }
+
+    .home-diff-box:hover {
+      transform: scale(1.02);
+      z-index: 1;
+    }
+
+    .home-diff-box h3 {
+      margin: 0 0 8px;
+      font-size: 0.96rem;
+      color: #15386f;
+    }
+
+    .home-diff-box p {
+      margin: 0;
+      font-size: 0.88rem;
+      color: #3f5e88;
+      line-height: 1.55;
+    }
+
+    .home-card {
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      padding: 6px 0;
+    }
+
+    .home-card h3 {
+      margin: 0 0 8px;
+      font-size: 1rem;
+      color: #15386f;
+    }
+
+    .home-card p {
+      margin: 0;
+      color: #3f5e88;
+      line-height: 1.55;
+      font-size: 0.9rem;
+    }
+
+    .home-footer {
+      margin-top: 10px;
+      padding: 16px 24px 20px;
+      border-top: 1px solid rgba(170, 191, 225, 0.45);
+      background: rgba(255, 255, 255, 0.55);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .home-footer-block h3 {
+      margin: 0 0 6px;
+      font-size: 0.95rem;
+      color: #15386f;
+    }
+
+    .home-footer-block p {
+      margin: 0;
+      color: #3f5e88;
+      font-size: 0.9rem;
+      line-height: 1.55;
+    }
+
+    .brand {
+      padding: 42px;
+      background: #1d4da1;
+      animation: brandGradientFlow 11s ease-in-out infinite;
+      color: #edf4f8;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .brand::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: url("blue2.png");
+      background-size: cover;
+      background-position: center;
+      opacity: 0.9;
+      -webkit-mask-image: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 1) 0%,
+        rgba(0, 0, 0, 1) 72%,
+        rgba(0, 0, 0, 0) 100%
+      );
+      mask-image: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 1) 0%,
+        rgba(0, 0, 0, 1) 72%,
+        rgba(0, 0, 0, 0) 100%
+      );
+      pointer-events: none;
+    }
+
+    .brand > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      padding: 8px 12px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.16);
+      font-size: 0.82rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: clamp(1.8rem, 3vw, 2.3rem);
+      line-height: 1.15;
+    }
+
+    .brand p {
+      margin: 0;
+      font-size: 1rem;
+      line-height: 1.6;
+      max-width: 36ch;
+      color: rgba(238, 247, 255, 0.9);
+    }
+
+    .panel {
+      padding: 42px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .panel h2 {
+      margin: 0 0 8px;
+      font-size: 1.6rem;
+    }
+
+    .subtitle {
+      margin: 0 0 24px;
+      color: var(--muted);
+      font-size: 0.97rem;
+    }
+
+    form {
+      display: grid;
+      gap: 14px;
+    }
+
+    label {
+      display: grid;
+      gap: 6px;
+      font-weight: 600;
+      font-size: 0.93rem;
+    }
+
+    input[type="email"],
+    input[type="password"],
+    input[type="text"] {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 12px 14px;
+      font: inherit;
+      color: var(--ink);
+      background: #f7faff;
+      box-shadow: none;
+      outline: none;
+      transition: border-color 130ms ease, box-shadow 130ms ease;
+    }
+
+    input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px var(--ring);
+    }
+
+    .password-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .password-wrap input {
+      padding-right: 82px;
+    }
+
+    .toggle-password {
+      position: absolute;
+      right: 8px;
+      border: 0;
+      border-radius: 6px;
+      padding: 6px 10px;
+      background: #dce8fb;
+      color: #173d80;
+      border: 1px solid rgba(29, 77, 161, 0.35);
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin: 2px 0 6px;
+    }
+
+    .remember {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      font-size: 0.9rem;
+      color: var(--muted);
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .remember input {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--primary);
+    }
+
+    .link {
+      font-size: 0.9rem;
+      color: var(--primary-strong);
+      text-decoration: none;
+    }
+
+    .link:hover {
+      text-decoration: underline;
+    }
+
+    .submit,
+    .btn {
+      border: 0;
+      border-radius: 6px;
+      padding: 12px 16px;
+      font: inherit;
+      font-weight: 700;
+      color: #fff;
+      background: var(--primary);
+      cursor: pointer;
+      transition: transform 120ms ease, filter 120ms ease;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(21, 53, 74, 0.16);
+    }
+
+    .submit:hover:enabled,
+    .btn:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.04);
+    }
+
+    .submit::before,
+    .btn::before {
+      display: none;
+    }
+
+    .submit:disabled {
+      opacity: 0.7;
+      cursor: wait;
+    }
+
+    .btn.secondary {
+      background: #dbe7fb;
+      color: #1a3f84;
+      border: 1px solid rgba(29, 77, 161, 0.35);
+      box-shadow: none;
+    }
+
+    .btn.secondary:hover {
+      filter: brightness(1.03);
+    }
+
+    .message {
+      min-height: 22px;
+      font-size: 0.92rem;
+      margin-top: 2px;
+    }
+
+    .message.error {
+      color: var(--danger);
+    }
+
+    .message.success {
+      color: var(--ok);
+    }
+
+    .hint {
+      margin-top: 16px;
+      font-size: 0.85rem;
+      color: #3f5e88;
+      line-height: 1.5;
+      background: #eaf1fd;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 10px 12px;
+      box-shadow: none;
+    }
+
+    .section-divider {
+      margin: 20px 0 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #406293;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .section-divider::before,
+    .section-divider::after {
+      content: "";
+      height: 1px;
+      background: var(--line);
+      flex: 1;
+    }
+
+    .signup-title {
+      margin: 0 0 8px;
+      font-size: 1.05rem;
+    }
+
+    .signup-subtitle {
+      margin: 0 0 12px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .field-error {
+      color: var(--danger);
+      font-size: 0.82rem;
+      min-height: 18px;
+      margin-top: 2px;
+    }
+
+    .dashboard-shell {
+      width: min(var(--page-max-width), 100%);
+      min-height: calc(100vh - 126px);
+      background: var(--surface);
+      border: 1px solid rgba(60, 86, 108, 0.22);
+      border-radius: 8px;
+      box-shadow: 0 4px 16px rgba(16, 35, 52, 0.14);
+      overflow: hidden;
+    }
+
+    .dash-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+      flex-wrap: wrap;
+      padding: 22px 28px;
+      background: #1d4da1;
+      color: #edf4f8;
+      position: sticky;
+      top: 0;
+      z-index: 4;
+      overflow: hidden;
+    }
+
+    .page-navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 10px 24px;
+      background: linear-gradient(180deg, #e8f0ff 0%, #d8e5fb 100%);
+      border: 1px solid rgba(29, 77, 161, 0.28);
+      border-radius: 0;
+      box-shadow: 0 4px 14px rgba(16, 35, 52, 0.14);
+    }
+
+    .global-navbar {
+      position: fixed;
+      left: 0;
+      right: 0;
+      top: 0;
+      z-index: 8;
+    }
+
+    .nav-header {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 8px;
+      font-weight: 700;
+      color: #1a3f84;
+      white-space: nowrap;
+    }
+
+    .nav-header-badge {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 6px;
+      border: 1px solid rgba(29, 77, 161, 0.3);
+      background: #f2f7ff;
+      padding: 7px 11px;
+      font-size: 0.86rem;
+      letter-spacing: 0.02em;
+    }
+
+    .nav-group {
+      display: inline-flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .dash-topbar::before {
+      display: none;
+    }
+
+    .dash-title {
+      margin: 0;
+      font-size: 1.25rem;
+    }
+
+    .dash-user {
+      margin: 4px 0 0;
+      opacity: 0.95;
+      font-size: 0.93rem;
+    }
+
+    .dash-timestamp {
+      margin: 6px 0 0;
+      font-size: 0.82rem;
+      opacity: 0.9;
+    }
+
+    .dash-nav {
+      display: inline-flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .dash-nav-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 8px 12px;
+      border-radius: 6px;
+      background: rgba(29, 77, 161, 0.09);
+      border: 1px solid rgba(29, 77, 161, 0.28);
+      font-size: 0.82rem;
+      letter-spacing: 0.03em;
+      text-transform: none;
+      font-weight: 600;
+    }
+
+    .dash-nav-chip.active {
+      background: rgba(29, 77, 161, 0.2);
+      border-color: rgba(29, 77, 161, 0.4);
+    }
+
+    .dash-nav-chip[role="button"] {
+      cursor: pointer;
+      justify-content: center;
+      width: 120px;
+      min-width: 120px;
+      padding: 9px 12px;
+      text-transform: none;
+      white-space: nowrap;
+    }
+
+    .sub-navbar {
+      position: fixed;
+      left: 0;
+      top: 94px;
+      width: 244px;
+      height: calc(100vh + 72px);
+      z-index: 7;
+      display: grid;
+      gap: 10px;
+      align-content: start;
+      padding: 14px;
+      border-radius: 0 8px 8px 0;
+      border: 1px solid rgba(29, 77, 161, 0.3);
+      border-left: 0;
+      background: linear-gradient(180deg, #e7efff 0%, #d5e2fb 100%);
+      box-shadow: 0 4px 14px rgba(16, 35, 52, 0.12);
+      overflow-y: auto;
+    }
+
+    .sub-nav-group {
+      display: grid;
+      gap: 8px;
+      align-content: start;
+    }
+
+    .sub-nav-chip {
+      border: 1px solid rgba(29, 77, 161, 0.32);
+      background: #f2f7ff;
+      color: #14376f;
+      border-radius: 6px;
+      padding: 9px 10px;
+      text-align: left;
+      cursor: pointer;
+      font: inherit;
+      font-size: 0.86rem;
+      font-weight: 600;
+    }
+
+    .sub-nav-chip.active {
+      background: #1d4da1;
+      color: #edf4f8;
+      border-color: #1d4da1;
+    }
+
+    .dash-body {
+      padding: 24px;
+      display: grid;
+      gap: 20px;
+      grid-template-columns: minmax(0, 1fr) 330px;
+      align-items: start;
+    }
+
+    .kpi-row {
+      grid-column: 1;
+      display: grid;
+      gap: 12px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .kpi-card {
+      background: #eef4ff;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 18px;
+      box-shadow: none;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .kpi-card::before {
+      display: none;
+    }
+
+    .kpi-title {
+      color: var(--muted);
+      font-size: 0.83rem;
+      margin: 0 0 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      font-weight: 700;
+    }
+
+    .kpi-value {
+      margin: 0;
+      font-size: 1.4rem;
+      font-weight: 700;
+    }
+
+    .kpi-note {
+      margin: 6px 0 0;
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+
+    .kpi-progress {
+      height: 11px;
+      border-radius: 4px;
+      background: rgba(130, 155, 174, 0.28);
+      overflow: hidden;
+      margin-top: 8px;
+    }
+
+    .kpi-progress > span {
+      display: block;
+      height: 100%;
+      width: 0;
+      background: var(--primary);
+      transition: width 340ms ease;
+    }
+
+    .kpi-progress-label {
+      margin: 8px 0 0;
+      font-size: 0.84rem;
+      color: #28559d;
+      font-weight: 700;
+    }
+
+    .kpi-meta {
+      margin: 4px 0 0;
+      font-size: 0.76rem;
+      color: var(--muted);
+      letter-spacing: 0.01em;
+    }
+
+    .panel-card {
+      background: #eef4ff;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 18px;
+      box-shadow: none;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .panel-card::before {
+      display: none;
+    }
+
+    .panel-card h3 {
+      margin: 0 0 10px;
+      font-size: 1.02rem;
+    }
+
+    .card-subtitle {
+      margin: 0 0 12px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .overview-list,
+    .milestone-list,
+    .insight-list,
+    .metric-list,
+    .integration-list,
+    .alerts-list,
+    .timeline-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 10px;
+    }
+
+    .overview-list li,
+    .milestone-list li,
+    .insight-list li,
+    .metric-list li,
+    .integration-list li,
+    .alerts-list li,
+    .timeline-list li {
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #e7effd;
+      font-size: 0.9rem;
+      box-shadow: none;
+    }
+
+    .project-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 6px;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .chip {
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 0.77rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      border: 1px solid rgba(29, 77, 161, 0.3);
+      background: rgba(221, 233, 255, 0.95);
+      color: #1a4b9b;
+    }
+
+    .chip.warn {
+      border-color: rgba(190, 134, 33, 0.38);
+      background: #fff4d9;
+      color: #886015;
+    }
+
+    .chip.danger {
+      border-color: rgba(183, 63, 71, 0.38);
+      background: #fde7e9;
+      color: #a5373f;
+    }
+
+    .chip.ok {
+      border-color: rgba(36, 133, 82, 0.4);
+      background: #e5f5eb;
+      color: #216e46;
+    }
+
+    .main-column {
+      display: grid;
+      grid-column: 1;
+      gap: 20px;
+    }
+
+    .module-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(260px, 1fr));
+      gap: 16px;
+    }
+
+    .module-grid .panel-card {
+      min-height: 230px;
+    }
+
+    .module-full {
+      grid-column: 1 / -1;
+    }
+
+    .alerts-column {
+      grid-column: 2;
+      grid-row: 1 / span 2;
+      display: grid;
+      gap: 16px;
+      position: sticky;
+      top: 100px;
+    }
+
+    .dash-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      padding: 14px 24px 24px;
+      border-top: 1px solid rgba(29, 77, 161, 0.22);
+      background: #e5eefc;
+      position: sticky;
+      bottom: 0;
+      z-index: 3;
+    }
+
+    .mock-disclaimer {
+      margin: 0 24px 22px;
+      padding: 12px 14px;
+      border-radius: 6px;
+      border: 1px solid rgba(29, 77, 161, 0.3);
+      background: linear-gradient(180deg, #edf4ff 0%, #dce8fd 100%);
+      color: #1c438c;
+      font-size: 0.86rem;
+      line-height: 1.45;
+    }
+
+    .reports-shell {
+      width: min(var(--page-max-width), 100%);
+      min-height: calc(100vh - 126px);
+      background: var(--surface);
+      border: 1px solid rgba(60, 86, 108, 0.22);
+      border-radius: 8px;
+      box-shadow: 0 4px 16px rgba(16, 35, 52, 0.14);
+      overflow: hidden;
+    }
+
+    .reports-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      padding: 20px 24px;
+      background: #1d4da1;
+      color: #edf4f8;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+    }
+
+    .reports-title-wrap h2 {
+      margin: 0;
+      font-size: 1.2rem;
+    }
+
+    .reports-title-wrap p {
+      margin: 6px 0 0;
+      opacity: 0.9;
+      font-size: 0.9rem;
+    }
+
+    .reports-body {
+      padding: 22px;
+      display: grid;
+      gap: 16px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .chart-card {
+      min-height: 215px;
+    }
+
+    .report-launch {
+      cursor: pointer;
+      transition: transform 140ms ease, box-shadow 140ms ease;
+    }
+
+    .report-launch:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 18px rgba(22, 52, 101, 0.14);
+    }
+
+    .report-launch:focus-visible {
+      outline: 3px solid rgba(29, 77, 161, 0.28);
+      outline-offset: 2px;
+    }
+
+    .reports-detail-body {
+      padding: 22px;
+      display: grid;
+      grid-template-columns: 1fr;
+    }
+
+    .report-detail-card {
+      min-height: 520px;
+    }
+
+    .detail-chart-wrap {
+      position: relative;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #edf3ff;
+      padding: 12px;
+      min-height: 420px;
+      overflow: hidden;
+    }
+
+    .detail-chart-svg {
+      display: block;
+      width: 100%;
+      height: 390px;
+    }
+
+    .detail-tooltip {
+      position: absolute;
+      pointer-events: none;
+      background: rgba(18, 41, 84, 0.94);
+      color: #f3f8ff;
+      border-radius: 6px;
+      padding: 7px 9px;
+      font-size: 0.79rem;
+      line-height: 1.35;
+      border: 1px solid rgba(182, 206, 245, 0.2);
+      transform: translate(10px, -10px);
+      white-space: nowrap;
+      opacity: 0;
+      transition: opacity 120ms ease;
+      z-index: 2;
+    }
+
+    .detail-tooltip.is-visible {
+      opacity: 1;
+    }
+
+    .report-detail-back {
+      margin-left: auto;
+    }
+
+    .chart-card h3 {
+      margin: 0 0 6px;
+      font-size: 1rem;
+    }
+
+    .chart-caption {
+      margin: 0 0 12px;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .chart-canvas-wrap {
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #e7effd;
+      padding: 6px;
+    }
+
+    .chart-canvas {
+      display: block;
+      width: 100%;
+      height: 165px;
+      border-radius: 4px;
+      background: #edf3ff;
+    }
+
+    .reports-disclaimer {
+      margin: 0 22px 22px;
+      padding: 12px 14px;
+      border-radius: 6px;
+      border: 1px solid rgba(29, 77, 161, 0.3);
+      background: linear-gradient(180deg, #edf4ff 0%, #dce8fd 100%);
+      color: #1c438c;
+      font-size: 0.86rem;
+      line-height: 1.45;
+    }
+
+    .section-pill {
+      display: inline-block;
+      margin-bottom: 8px;
+      padding: 4px 9px;
+      border-radius: 6px;
+      background: #dfeaff;
+      color: #1d4da1;
+      border: 1px solid rgba(29, 77, 161, 0.26);
+      font-size: 0.77rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .big-number {
+      margin: 0;
+      font-size: 1.6rem;
+      font-weight: 700;
+    }
+
+    .small-note {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 0.86rem;
+    }
+
+    .mini-grid {
+      display: grid;
+      gap: 10px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .mini-box {
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #e7effd;
+      padding: 10px;
+      font-size: 0.88rem;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .report-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .metric-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .progress {
+      height: 10px;
+      border-radius: 4px;
+      background: #c9d9f5;
+      overflow: hidden;
+      box-shadow: none;
+    }
+
+    .progress > span {
+      display: block;
+      height: 100%;
+      background: var(--primary);
+    }
+
+    @media (max-width: 1200px) {
+      .dash-body {
+        grid-template-columns: 1fr;
+      }
+
+      .kpi-row,
+      .main-column,
+      .alerts-column {
+        grid-column: 1;
+      }
+
+      .alerts-column {
+        grid-row: auto;
+        position: static;
+      }
+
+      .module-grid .panel-card {
+        min-height: 0;
+      }
+    }
+
+    @media (max-width: 980px) {
+      .module-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .kpi-row {
+        grid-template-columns: 1fr;
+      }
+
+      .reports-body {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 860px) {
+      .home-hero,
+      .home-info-grid,
+      .home-diff-grid,
+      .home-footer,
+      .auth-shell {
+        grid-template-columns: 1fr;
+      }
+
+      .home-diff-grid {
+        gap: 8px;
+        padding: 0 16px;
+      }
+
+      .home-topbar {
+        grid-template-columns: 1fr;
+        justify-items: start;
+        padding: 12px 16px;
+      }
+
+      .home-menu {
+        justify-content: flex-start;
+      }
+
+      .home-login {
+        justify-self: start;
+      }
+
+      .home-hero {
+        min-height: auto;
+        padding: 22px;
+      }
+
+      .home-hero-copy {
+        padding-left: 0;
+      }
+
+      .home-hero-media {
+        position: relative;
+        width: 100%;
+        height: 220px;
+        margin-top: 12px;
+      }
+
+      .home-hero-image {
+        -webkit-mask-image: none;
+        mask-image: none;
+      }
+
+      .brand,
+      .panel {
+        padding: 28px;
+      }
+
+      .brand p {
+        max-width: none;
+      }
+
+      .kpi-row,
+      .module-grid,
+      .mini-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .dash-topbar {
+        padding: 18px;
+      }
+
+      .dash-body {
+        padding: 16px;
+      }
+
+      .dash-actions {
+        padding: 12px 16px 16px;
+      }
+
+      .mock-disclaimer {
+        margin: 0 16px 16px;
+      }
+
+      .reports-topbar {
+        padding: 16px;
+      }
+
+      .reports-body {
+        padding: 16px;
+      }
+
+      .reports-disclaimer {
+        margin: 0 16px 16px;
+      }
+    }
+
+    @media (max-width: 980px) {
+      body {
+        padding: 94px 16px 16px;
+      }
+
+      body.home-mode {
+        padding: 0;
+      }
+
+      body.app-with-subnav {
+        padding: 150px 16px 16px;
+      }
+
+      .global-navbar {
+        left: 0;
+        right: 0;
+      }
+
+      .page-navbar {
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 10px 16px;
+      }
+
+      .nav-group {
+        width: 100%;
+        justify-content: flex-start;
+      }
+
+      .sub-navbar {
+        left: 0;
+        right: 0;
+        top: 150px;
+        width: auto;
+        height: auto;
+        max-height: 52px;
+        border-radius: 0;
+        border-left: 0;
+        border-right: 0;
+      }
+
+      .sub-nav-group {
+        display: flex;
+        overflow-x: auto;
+        padding-bottom: 2px;
+      }
+
+      .sub-nav-chip {
+        white-space: nowrap;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      body {
+        animation: none;
+      }
+
+      .brand {
+        animation: none;
+      }
+
+      .page-enter {
+        animation: none;
+      }
+
+      .bubble-enter {
+        animation: none;
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav id="globalNavbar" class="page-navbar global-navbar hidden" aria-label="Page navigation">
+    <div class="nav-header">
+      <span class="nav-header-badge">AImpact4SMEs</span>
+    </div>
+    <div class="nav-group">
+      <span id="navProjectsChip" class="dash-nav-chip active" role="button" tabindex="0" data-nav-target="dashboard" aria-label="Open dashboard">Projects</span>
+      <span id="navAnalyticsChip" class="dash-nav-chip" role="button" tabindex="0" data-nav-target="analytics">Analytics</span>
+      <span id="navReportsChip" class="dash-nav-chip" role="button" tabindex="0" data-nav-target="reports" aria-label="Open reports">Reports</span>
+      <span id="navSettingsChip" class="dash-nav-chip" role="button" tabindex="0" data-nav-target="settings">Settings</span>
+    </div>
+  </nav>
+  <aside id="subNavbar" class="sub-navbar hidden" aria-label="Subcategory navigation">
+    <div id="subNavGroup" class="sub-nav-group"></div>
+  </aside>
+
+  <main id="homeView" class="home-shell" role="main">
+    <header class="home-topbar" aria-label="Homepage navigation">
+      <h1 class="home-company">AImpact4SMEs</h1>
+      <nav class="home-menu" aria-label="Homepage sections">
+        <button type="button" class="home-menu-link" data-home-target="homeAbout">About us</button>
+        <button type="button" class="home-menu-link" data-home-target="homePricing">Pricing</button>
+        <button type="button" class="home-menu-link" data-home-target="homeFeatures">Features</button>
+        <button type="button" class="home-menu-link" data-home-target="homeContact">Contact</button>
+      </nav>
+      <a class="home-login" href="#login">Login</a>
+    </header>
+
+    <section class="home-hero" aria-label="Hero">
+      <div class="home-hero-copy">
+        <p class="home-kicker">Built for ambitious SMEs</p>
+        <h1 id="homeCatchphrase" class="home-catchphrase">Run smarter operations with AI impact intelligence</h1>
+        <p class="home-subtitle">
+          AImpact4SMEs helps teams track project delivery, budget health, ESG outcomes, and risk signals in one clean workspace designed for rapid decisions.
+        </p>
+        <div class="home-hero-actions">
+          <button id="goSignupBtn" type="button" class="submit">Start free trial</button>
+          <button id="goFeaturesBtn" type="button" class="btn secondary">Explore features</button>
+        </div>
+      </div>
+      <div class="home-hero-media" aria-label="Hero image area">
+        <img class="home-hero-image" src="construct.png" alt="Construction operations preview" />
+      </div>
+    </section>
+
+    <section class="home-difference" aria-label="The AImpact4SMEs Difference">
+      <h2>The AImpact4SMEs Difference</h2>
+      <div class="home-diff-grid">
+        <article class="home-diff-box" data-bubble>
+          <h3>Unified Performance View</h3>
+          <p>Bring projects, costs, and risk signals into one live command layer so operations leaders can prioritize quickly without switching systems.</p>
+        </article>
+        <article class="home-diff-box" data-bubble>
+          <h3>Practical ESG Tracking</h3>
+          <p>Track environmental, social, and governance progress with measurable KPIs mapped to real workflows, not disconnected reporting templates.</p>
+        </article>
+        <article class="home-diff-box" data-bubble>
+          <h3>Fast Deployment</h3>
+          <p>Start lean in days, connect existing tools, and expand modules gradually so teams realize value early while minimizing rollout friction.</p>
+        </article>
+        <article class="home-diff-box" data-bubble>
+          <h3>Transparent Pricing Paths</h3>
+          <p>Choose starter, growth, or scale tiers based on team size and integration depth with clear monthly economics for predictable planning.</p>
+        </article>
+        <article class="home-diff-box" data-bubble>
+          <h3>SME-Ready Security</h3>
+          <p>Use role-based access, audit visibility, and connector controls designed for SMEs that need enterprise discipline without enterprise overhead.</p>
+        </article>
+        <article class="home-diff-box" data-bubble>
+          <h3>High-Touch Support</h3>
+          <p>Get direct onboarding, practical optimization guidance, and responsive support channels that help teams sustain adoption after launch.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="homeFeatures" class="home-info-grid" aria-label="Features overview">
+      <article class="home-card" data-bubble>
+        <h3>Unified Performance View</h3>
+        <p>Monitor project progress, cost efficiency, and risk status in real time with actionable AI summaries for managers and leadership.</p>
+      </article>
+      <article class="home-card" data-bubble>
+        <h3>Practical ESG Tracking</h3>
+        <p>Measure environmental, social, and governance indicators with dashboards that teams can actually use day to day.</p>
+      </article>
+      <article class="home-card" data-bubble>
+        <h3>Fast Deployment</h3>
+        <p>Launch quickly with lightweight setup, secure API integrations, and role-ready templates for operations, finance, and compliance.</p>
+      </article>
+    </section>
+
+    <section class="home-info-grid" aria-label="Pricing">
+      <article id="homePricing" class="home-card" data-bubble>
+        <h3>Pricing</h3>
+        <p>Starter for small teams, Growth for multi-site operators, and Scale for advanced integrations. Transparent monthly billing.</p>
+      </article>
+      <article class="home-card" data-bubble>
+        <h3>Deployment</h3>
+        <p>Go live in days with your existing workflows, then scale modules gradually as teams adopt automated decision support.</p>
+      </article>
+      <article class="home-card" data-bubble>
+        <h3>Security</h3>
+        <p>Role-based access, audit trails, and integration controls designed to fit SME governance and compliance expectations.</p>
+      </article>
+    </section>
+
+    <footer class="home-footer" aria-label="About and contact">
+      <section id="homeAbout" class="home-footer-block">
+        <h3>About us</h3>
+        <p>We build focused AI tooling for SMEs that need enterprise-grade insight without enterprise-grade complexity or overhead.</p>
+      </section>
+      <section id="homeContact" class="home-footer-block">
+        <h3>Contact</h3>
+        <p>Sales: sales@aimpact4smes.io<br />Support: support@aimpact4smes.io<br />Partnerships: partners@aimpact4smes.io</p>
+      </section>
+    </footer>
+  </main>
+
+  <main id="loginView" class="auth-shell hidden" role="main">
+    <section class="brand" aria-label="Brand">
+      <span class="badge">AImpact4SMEs</span>
+      <h1>Welcome back</h1>
+      <p>Sign in to access your SME impact dashboard, manage projects, and track ESG progress in one place.</p>
+    </section>
+
+    <section class="panel" aria-label="Login form">
+      <h2>Sign in</h2>
+      <p class="subtitle">Use your account credentials to continue.</p>
+
+      <form id="loginForm" novalidate>
+        <label for="email">
+          Email
+          <input id="email" name="email" type="email" autocomplete="email" placeholder="you@company.com" required />
+          <span id="emailError" class="field-error" aria-live="polite"></span>
+        </label>
+
+        <label for="password">
+          Password
+          <div class="password-wrap">
+            <input id="password" name="password" type="password" autocomplete="current-password" placeholder="Enter your password" required minlength="8" />
+            <button type="button" class="toggle-password" id="togglePassword" aria-label="Show password">Show</button>
+          </div>
+          <span id="passwordError" class="field-error" aria-live="polite"></span>
+        </label>
+
+        <div class="row">
+          <label class="remember" for="rememberMe">
+            <input id="rememberMe" name="rememberMe" type="checkbox" />
+            Remember me
+          </label>
+          <a class="link" href="#" aria-label="Recover password">Forgot password?</a>
+        </div>
+
+        <button type="submit" id="submitBtn" class="submit">Sign in</button>
+        <p id="formMessage" class="message" aria-live="polite"></p>
+      </form>
+
+      <div class="hint">
+        Demo login: <strong>admin@aimpact.io</strong> and <strong>AImpact2026!</strong>
+      </div>
+
+      <div class="section-divider" aria-hidden="true">Or</div>
+
+      <h3 id="signupStart" class="signup-title">Create an account</h3>
+      <p class="signup-subtitle">New users can sign up with email and password.</p>
+      <form id="signupForm" novalidate>
+        <label for="signupEmail">
+          New email
+          <input id="signupEmail" name="signupEmail" type="email" autocomplete="email" placeholder="newuser@company.com" required />
+          <span id="signupEmailError" class="field-error" aria-live="polite"></span>
+        </label>
+
+        <label for="signupPassword">
+          New password
+          <input id="signupPassword" name="signupPassword" type="password" autocomplete="new-password" placeholder="Create a password" required minlength="8" />
+          <span id="signupPasswordError" class="field-error" aria-live="polite"></span>
+        </label>
+
+        <button type="submit" id="signupBtn" class="submit">Sign up</button>
+        <p id="signupMessage" class="message" aria-live="polite"></p>
+      </form>
+    </section>
+  </main>
+
+  <main id="dashboardView" class="dashboard-shell hidden" aria-label="Dashboard">
+    <header class="dash-topbar">
+      <div>
+        <h2 class="dash-title">Impact Dashboard</h2>
+        <p id="dashUser" class="dash-user">Signed in as admin@aimpact.io</p>
+        <p id="dashTimestamp" class="dash-timestamp">Updated: --</p>
+      </div>
+      <button id="logoutBtn" type="button" class="btn secondary">Log out</button>
+    </header>
+
+    <section class="dash-body">
+      <section id="dashboardKpiRow" class="kpi-row" aria-label="Top KPI tiles">
+        <article class="kpi-card">
+          <p class="kpi-title">Project Status</p>
+          <div class="kpi-progress"><span id="kpiProjectProgressFill" style="width: 78%;"></span></div>
+          <p id="kpiProjectProgressLabel" class="kpi-progress-label">78% Portfolio On-Track Index</p>
+          <p id="kpiProjectDetail" class="kpi-meta">14 on track / 3 at risk / 1 delayed</p>
+        </article>
+        <article class="kpi-card">
+          <p class="kpi-title">Budget Health</p>
+          <div class="kpi-progress"><span id="kpiBudgetProgressFill" style="width: 90%;"></span></div>
+          <p id="kpiBudgetProgressLabel" class="kpi-progress-label">90% Budget Utilization Efficiency</p>
+          <p id="kpiBudgetDetail" class="kpi-meta">$5.2M allocated / $4.7M spent</p>
+        </article>
+        <article class="kpi-card">
+          <p class="kpi-title">Risk Score</p>
+          <div class="kpi-progress"><span id="kpiRiskProgressFill" style="width: 72%;"></span></div>
+          <p id="kpiRiskProgressLabel" class="kpi-progress-label">72 / 100 Risk Control Score</p>
+          <p id="kpiRiskDetail" class="kpi-meta">Current classification: Moderate</p>
+        </article>
+      </section>
+
+      <section class="main-column">
+        <section id="dashboardProjectOverview" class="panel-card" aria-label="Project overview">
+          <span class="section-pill">Project Overview</span>
+          <h3>Active Construction Portfolio</h3>
+          <p class="card-subtitle">AI-driven project management snapshot with milestones, deadlines, and team load.</p>
+          <ul class="overview-list">
+            <li>
+              <div class="project-row"><span>Site Expansion North</span><span class="chip ok">On Track</span></div>
+              <div class="project-row"><span id="project1Completion">Completion: 67%</span><span id="project1Deadline">Deadline: Jul 12</span></div>
+              <div class="project-row"><span id="project1Team">Team: Site Crew 1 + Contractor Alpha</span><span>Next Milestone: Foundation QA</span></div>
+            </li>
+            <li>
+              <div class="project-row"><span>Warehouse Retrofit Phase 2</span><span class="chip warn">At Risk</span></div>
+              <div class="project-row"><span id="project2Completion">Completion: 51%</span><span id="project2Deadline">Deadline: Jun 29</span></div>
+              <div class="project-row"><span id="project2Team">Team: Site Crew 2 + Contractor Beta</span><span>Next Milestone: MEP rough-in</span></div>
+            </li>
+            <li>
+              <div class="project-row"><span>Tower B Facade Package</span><span class="chip danger">Delayed</span></div>
+              <div class="project-row"><span id="project3Completion">Completion: 39%</span><span id="project3Deadline">Deadline: May 31</span></div>
+              <div class="project-row"><span id="project3Team">Team: Site Crew 3 + Contractor Gamma</span><span>Next Milestone: Panel delivery</span></div>
+            </li>
+          </ul>
+        </section>
+
+        <section class="module-grid">
+          <section id="dashCostOptimization" class="panel-card" aria-label="Cost optimization dashboard">
+            <span class="section-pill">Cost Optimization</span>
+            <h3>Budget and Procurement Intelligence</h3>
+            <ul class="metric-list">
+              <li class="metric-row"><span>Budget vs Actual</span><strong id="costBudgetActual">$5.2M / $4.7M</strong></li>
+              <li class="metric-row"><span>Labor Cost Trend</span><strong id="costLaborTrend">+3.1% (30d)</strong></li>
+              <li class="metric-row"><span>Material Price Index</span><strong id="costMaterialIndex">Steel +4.8%</strong></li>
+              <li class="metric-row"><span>Procurement Benchmark</span><strong id="costProcurementBenchmark">Top quartile</strong></li>
+            </ul>
+            <p id="costRecommendation" class="small-note">AI Recommendation: Switch rebar supplier for Lot 7 to save 12%.</p>
+          </section>
+
+          <section id="dashRiskManagement" class="panel-card" aria-label="Risk management center">
+            <span class="section-pill">Risk Management</span>
+            <h3>Early Warning and Mitigation</h3>
+            <ul class="metric-list">
+              <li class="metric-row"><span>Delay Probability</span><strong id="riskDelayProbability">38%</strong></li>
+              <li class="metric-row"><span>Budget Overrun Likelihood</span><strong id="riskBudgetOverrun">22%</strong></li>
+              <li class="metric-row"><span>Safety Alert Index</span><strong id="riskSafetyAlert">Low</strong></li>
+              <li class="metric-row"><span>Weather Risk Signal</span><strong id="riskWeatherSignal">High Wind Thu</strong></li>
+            </ul>
+            <p id="riskSuggestedAction" class="small-note">Suggested action: Shift crane activity + add weekend crew window.</p>
+          </section>
+
+          <section class="panel-card" aria-label="AI insights and analytics panel">
+            <span class="section-pill">AI Insights</span>
+            <h3>Predictive Analytics</h3>
+            <ul class="insight-list">
+              <li>Concrete phase may slip by 5 days if crew allocation stays unchanged.</li>
+              <li>Resource bottleneck detected on electrical inspections in week 28.</li>
+              <li>Productivity trend +8% on projects with prefabricated components.</li>
+              <li>Historical comparison: current cycle time is 11% faster than FY2025.</li>
+            </ul>
+          </section>
+
+          <section class="panel-card" aria-label="Data visualization and reporting hub">
+            <span class="section-pill">Reporting Hub</span>
+            <h3>Automated KPI Reporting</h3>
+            <div class="mini-grid">
+              <div class="mini-box"><strong>Budget Health</strong><br />Interactive burn-rate chart</div>
+              <div class="mini-box"><strong>Progress KPI</strong><br />Milestone velocity trend</div>
+              <div class="mini-box"><strong>Quality Metric</strong><br />Defect closure trend</div>
+              <div class="mini-box"><strong>Executive Summary</strong><br />Auto-generated weekly brief</div>
+            </div>
+            <div class="report-actions">
+              <button type="button" class="btn">Build Custom Report</button>
+              <button type="button" class="btn secondary">Export PDF</button>
+              <button type="button" class="btn secondary">Export Excel</button>
+            </div>
+          </section>
+
+          <section class="panel-card" aria-label="Resource and scheduling manager">
+            <span class="section-pill">Resources</span>
+            <h3>Labor and Scheduling Manager</h3>
+            <ul class="timeline-list">
+              <li>Crew allocation map: Civil Crew A at 92% utilization.</li>
+              <li>Equipment usage: 2 cranes overbooked on Thursday PM.</li>
+              <li>Material forecast: concrete demand spike in next 10 days.</li>
+              <li>Scheduling conflict: facade and MEP overlap at Zone C.</li>
+              <li>AI priority: move steel installation to unlock inspection path.</li>
+            </ul>
+          </section>
+
+          <section class="panel-card" aria-label="Integrations and workflow panel">
+            <span class="section-pill">Integrations</span>
+            <h3>Cloud Workflow Health</h3>
+            <ul class="integration-list">
+              <li class="metric-row"><span>Primavera P6 Sync</span><span class="chip ok">Healthy</span></li>
+              <li class="metric-row"><span>BIM360 Feed</span><span class="chip ok">Live</span></li>
+              <li class="metric-row"><span>Document Upload Queue</span><span class="chip warn">2 Pending</span></li>
+              <li class="metric-row"><span>API Connection Health</span><span id="integrationApiHealth" class="chip ok">99.8%</span></li>
+              <li class="metric-row"><span>Last Data Sync</span><strong id="integrationLastSync">2 min ago</strong></li>
+            </ul>
+          </section>
+
+          <section class="panel-card module-full" aria-label="Company performance summary">
+            <span class="section-pill">Executive View</span>
+            <h3>Company Performance Summary</h3>
+            <div class="mini-grid">
+              <div class="mini-box"><div id="execSavings" class="big-number">$128K</div>Monthly savings generated by AI</div>
+              <div class="mini-box"><div id="execEfficiency" class="big-number">+17%</div>Efficiency improvement</div>
+              <div class="mini-box"><div id="execOnTime" class="big-number">84%</div>Projects delivered on time</div>
+              <div class="mini-box"><div id="execRoi" class="big-number">3.6x</div>Estimated platform ROI</div>
+            </div>
+            <p id="execBenchmark" class="small-note">Benchmark: Your delivery performance is +9% above industry average for similar SME projects.</p>
+          </section>
+        </section>
+      </section>
+
+      <aside class="alerts-column" aria-label="Alerts and notifications feed">
+        <section id="dashAlertsFeed" class="panel-card">
+          <span class="section-pill">Alerts Feed</span>
+          <h3>Live Notifications</h3>
+          <ul class="alerts-list">
+            <li><strong>Risk Alert:</strong> <span id="riskAlertText">Tower B facade delay probability crossed 35%.</span></li>
+            <li><strong>Budget Warning:</strong> <span id="budgetThresholdText">Concrete package exceeded threshold by 6.3%.</span></li>
+            <li><strong>Schedule Conflict:</strong> Crane slot overlap on Thursday 15:00.</li>
+            <li><strong>Approval Request:</strong> Supplier switch recommendation pending.</li>
+            <li><strong>AI Action:</strong> Reassign 4 workers to reduce delay risk.</li>
+          </ul>
+        </section>
+
+        <section class="panel-card">
+          <span class="section-pill">Milestones</span>
+          <h3>Upcoming Deadlines</h3>
+          <ul class="milestone-list">
+            <li>May 30: Facade panel delivery confirmation</li>
+            <li>Jun 02: MEP inspection gate review</li>
+            <li>Jun 06: Client progress report submission</li>
+            <li>Jun 10: Budget reforecast approval cycle</li>
+          </ul>
+        </section>
+      </aside>
+    </section>
+
+    <section class="dash-actions">
+      <button type="button" class="btn">Approve AI Recommendations</button>
+      <button id="openReportsBtn" type="button" class="btn secondary">Open Full Analytics</button>
+      <button type="button" class="btn secondary">Invite Contractor</button>
+    </section>
+    <p class="mock-disclaimer">
+      Disclaimer: This dashboard is a mockup proof of concept. All live-updating metrics and time-series values shown here are simulated for demonstration only.
+    </p>
+  </main>
+
+  <main id="reportsView" class="reports-shell hidden" aria-label="Data statistics and reports">
+    <header class="reports-topbar">
+      <div class="reports-title-wrap">
+        <h2>Data Statistics and Reports</h2>
+        <p>Interactive reporting workspace with simulated business intelligence metrics.</p>
+      </div>
+    </header>
+
+    <section class="reports-body">
+      <article id="reportsRevenue" class="panel-card chart-card report-launch" role="button" tabindex="0" data-report-subpage="performance" aria-label="Open performance detail view">
+        <span class="section-pill">Performance</span>
+        <h3>Monthly Revenue Trend</h3>
+        <p class="chart-caption">Revenue progression across 12 reporting periods.</p>
+        <div class="chart-canvas-wrap">
+          <canvas id="revenueLineChart" class="chart-canvas" width="640" height="220" aria-label="Revenue line chart"></canvas>
+        </div>
+      </article>
+
+      <article id="reportsCosts" class="panel-card chart-card report-launch" role="button" tabindex="0" data-report-subpage="operations" aria-label="Open operations detail view">
+        <span class="section-pill">Operations</span>
+        <h3>Department Cost Breakdown</h3>
+        <p class="chart-caption">Comparative spend by operational function.</p>
+        <div class="chart-canvas-wrap">
+          <canvas id="costBarChart" class="chart-canvas" width="640" height="220" aria-label="Cost bar chart"></canvas>
+        </div>
+      </article>
+
+      <article id="reportsEsg" class="panel-card chart-card report-launch" role="button" tabindex="0" data-report-subpage="sustainability" aria-label="Open sustainability detail view">
+        <span class="section-pill">Sustainability</span>
+        <h3>ESG Distribution Index</h3>
+        <p class="chart-caption">Proportional split of environmental, social, and governance indicators.</p>
+        <div class="chart-canvas-wrap">
+          <canvas id="esgDonutChart" class="chart-canvas" width="640" height="220" aria-label="ESG donut chart"></canvas>
+        </div>
+      </article>
+
+      <article id="reportsForecast" class="panel-card chart-card report-launch" role="button" tabindex="0" data-report-subpage="forecasting" aria-label="Open forecasting detail view">
+        <span class="section-pill">Forecasting</span>
+        <h3>Demand Projection Curve</h3>
+        <p class="chart-caption">Expected demand model with quarterly seasonality pattern.</p>
+        <div class="chart-canvas-wrap">
+          <canvas id="demandAreaChart" class="chart-canvas" width="640" height="220" aria-label="Demand area chart"></canvas>
+        </div>
+      </article>
+    </section>
+
+    <p class="reports-disclaimer">
+      Disclaimer: This reports page is a mockup proof of concept using made-up, simulated data values for demonstration only.
+    </p>
+  </main>
+
+  <main id="reportsDetailView" class="reports-shell hidden" aria-label="Detailed report view">
+    <header class="reports-topbar">
+      <div class="reports-title-wrap">
+        <h2 id="reportDetailHeaderTitle">Reports Detail</h2>
+        <p id="reportDetailHeaderSubtitle">Expanded view with interactive data points.</p>
+      </div>
+      <button id="reportDetailBackBtn" type="button" class="btn secondary report-detail-back">Back to Reports</button>
+    </header>
+    <section class="reports-detail-body">
+      <article class="panel-card report-detail-card">
+        <span id="reportDetailPill" class="section-pill">Detail Module</span>
+        <h3 id="reportDetailTitle">Detailed Trend</h3>
+        <p id="reportDetailCaption" class="chart-caption">Hover points for exact values.</p>
+        <div class="detail-chart-wrap">
+          <svg id="detailChartSvg" class="detail-chart-svg" viewBox="0 0 960 390" aria-label="Detailed interactive chart"></svg>
+          <div id="detailChartTooltip" class="detail-tooltip" aria-hidden="true"></div>
+        </div>
+      </article>
+    </section>
+    <p class="reports-disclaimer">
+      Detail view: Hover chart points or segments to inspect exact values and labels.
+    </p>
+  </main>
+
+  <main id="analyticsView" class="reports-shell hidden" aria-label="Analytics template page">
+    <header class="reports-topbar">
+      <div class="reports-title-wrap">
+        <h2>Analytics</h2>
+        <p>Template analytics workspace for future model outputs and trend investigations.</p>
+      </div>
+    </header>
+    <section class="reports-body">
+      <article id="analyticsKpiSegmentation" class="panel-card chart-card">
+        <span class="section-pill">Template Module</span>
+        <h3>KPI Segmentation</h3>
+        <p class="chart-caption">Reserved for cohort slicing, category breakdowns, and KPI drift analysis.</p>
+      </article>
+      <article id="analyticsTrendCorrelation" class="panel-card chart-card">
+        <span class="section-pill">Template Module</span>
+        <h3>Trend Correlation</h3>
+        <p class="chart-caption">Reserved for multi-variable trend mapping and anomaly insights.</p>
+      </article>
+      <article id="analyticsForecastDiagnostics" class="panel-card chart-card">
+        <span class="section-pill">Template Module</span>
+        <h3>Forecast Diagnostics</h3>
+        <p class="chart-caption">Reserved for forecast confidence bands and scenario comparisons.</p>
+      </article>
+      <article id="analyticsModelExplainability" class="panel-card chart-card">
+        <span class="section-pill">Template Module</span>
+        <h3>Model Explainability</h3>
+        <p class="chart-caption">Reserved for feature importance, contribution, and sensitivity views.</p>
+      </article>
+    </section>
+    <p class="reports-disclaimer">
+      Template page: Analytics cards are placeholders ready for real data bindings.
+    </p>
+  </main>
+
+  <main id="settingsView" class="reports-shell hidden" aria-label="Settings template page">
+    <header class="reports-topbar">
+      <div class="reports-title-wrap">
+        <h2>Settings</h2>
+        <p>Template settings workspace for account preferences, integrations, and governance controls.</p>
+      </div>
+    </header>
+    <section class="reports-body">
+      <article id="settingsProfileAccess" class="panel-card chart-card">
+        <span class="section-pill">Template Module</span>
+        <h3>Profile and Access</h3>
+        <p class="chart-caption">Reserved for user profile, role permissions, and account security controls.</p>
+      </article>
+      <article id="settingsNotificationRules" class="panel-card chart-card">
+        <span class="section-pill">Template Module</span>
+        <h3>Notification Rules</h3>
+        <p class="chart-caption">Reserved for alert routing, channel preferences, and escalation thresholds.</p>
+      </article>
+      <article id="settingsIntegrationEndpoints" class="panel-card chart-card">
+        <span class="section-pill">Template Module</span>
+        <h3>Integration Endpoints</h3>
+        <p class="chart-caption">Reserved for data connectors, API credentials, and sync policies.</p>
+      </article>
+      <article id="settingsSystemPolicies" class="panel-card chart-card">
+        <span class="section-pill">Template Module</span>
+        <h3>System Policies</h3>
+        <p class="chart-caption">Reserved for retention, compliance, and environment-wide configuration options.</p>
+      </article>
+    </section>
+    <p class="reports-disclaimer">
+      Template page: Settings cards are placeholders ready for configuration forms.
+    </p>
+  </main>
+
+  <script>
+    (function () {
+      const form = document.getElementById('loginForm');
+      const emailInput = document.getElementById('email');
+      const passwordInput = document.getElementById('password');
+      const rememberInput = document.getElementById('rememberMe');
+      const submitBtn = document.getElementById('submitBtn');
+      const togglePasswordBtn = document.getElementById('togglePassword');
+      const formMessage = document.getElementById('formMessage');
+      const emailError = document.getElementById('emailError');
+      const passwordError = document.getElementById('passwordError');
+      const homeView = document.getElementById('homeView');
+      const loginView = document.getElementById('loginView');
+      const dashboardView = document.getElementById('dashboardView');
+      const reportsView = document.getElementById('reportsView');
+      const reportsDetailView = document.getElementById('reportsDetailView');
+      const analyticsView = document.getElementById('analyticsView');
+      const settingsView = document.getElementById('settingsView');
+      const globalNavbar = document.getElementById('globalNavbar');
+      const subNavbar = document.getElementById('subNavbar');
+      const subNavGroup = document.getElementById('subNavGroup');
+      const navProjectsChip = document.getElementById('navProjectsChip');
+      const navAnalyticsChip = document.getElementById('navAnalyticsChip');
+      const navReportsChip = document.getElementById('navReportsChip');
+      const navSettingsChip = document.getElementById('navSettingsChip');
+      const navTargetChips = document.querySelectorAll('[data-nav-target]');
+      const dashUser = document.getElementById('dashUser');
+      const dashTimestamp = document.getElementById('dashTimestamp');
+      const logoutBtn = document.getElementById('logoutBtn');
+      const openReportsBtn = document.getElementById('openReportsBtn');
+      const signupForm = document.getElementById('signupForm');
+      const signupStart = document.getElementById('signupStart');
+      const signupEmailInput = document.getElementById('signupEmail');
+      const signupPasswordInput = document.getElementById('signupPassword');
+      const signupBtn = document.getElementById('signupBtn');
+      const signupMessage = document.getElementById('signupMessage');
+      const signupEmailError = document.getElementById('signupEmailError');
+      const signupPasswordError = document.getElementById('signupPasswordError');
+      const homeCatchphrase = document.getElementById('homeCatchphrase');
+      const goSignupBtn = document.getElementById('goSignupBtn');
+      const goFeaturesBtn = document.getElementById('goFeaturesBtn');
+      const homeMenuLinks = document.querySelectorAll('[data-home-target]');
+      const reportLaunchCards = document.querySelectorAll('[data-report-subpage]');
+      const reportDetailHeaderTitle = document.getElementById('reportDetailHeaderTitle');
+      const reportDetailHeaderSubtitle = document.getElementById('reportDetailHeaderSubtitle');
+      const reportDetailPill = document.getElementById('reportDetailPill');
+      const reportDetailTitle = document.getElementById('reportDetailTitle');
+      const reportDetailCaption = document.getElementById('reportDetailCaption');
+      const reportDetailBackBtn = document.getElementById('reportDetailBackBtn');
+      const detailChartSvg = document.getElementById('detailChartSvg');
+      const detailChartTooltip = document.getElementById('detailChartTooltip');
+      const kpiProjectProgressFill = document.getElementById('kpiProjectProgressFill');
+      const kpiProjectProgressLabel = document.getElementById('kpiProjectProgressLabel');
+      const kpiProjectDetail = document.getElementById('kpiProjectDetail');
+      const kpiBudgetProgressFill = document.getElementById('kpiBudgetProgressFill');
+      const kpiBudgetProgressLabel = document.getElementById('kpiBudgetProgressLabel');
+      const kpiBudgetDetail = document.getElementById('kpiBudgetDetail');
+      const kpiRiskProgressFill = document.getElementById('kpiRiskProgressFill');
+      const kpiRiskProgressLabel = document.getElementById('kpiRiskProgressLabel');
+      const kpiRiskDetail = document.getElementById('kpiRiskDetail');
+      const costBudgetActual = document.getElementById('costBudgetActual');
+      const costLaborTrend = document.getElementById('costLaborTrend');
+      const costMaterialIndex = document.getElementById('costMaterialIndex');
+      const costProcurementBenchmark = document.getElementById('costProcurementBenchmark');
+      const costRecommendation = document.getElementById('costRecommendation');
+      const riskDelayProbability = document.getElementById('riskDelayProbability');
+      const riskBudgetOverrun = document.getElementById('riskBudgetOverrun');
+      const riskSafetyAlert = document.getElementById('riskSafetyAlert');
+      const riskWeatherSignal = document.getElementById('riskWeatherSignal');
+      const riskSuggestedAction = document.getElementById('riskSuggestedAction');
+      const integrationApiHealth = document.getElementById('integrationApiHealth');
+      const integrationLastSync = document.getElementById('integrationLastSync');
+      const execSavings = document.getElementById('execSavings');
+      const execEfficiency = document.getElementById('execEfficiency');
+      const execOnTime = document.getElementById('execOnTime');
+      const execRoi = document.getElementById('execRoi');
+      const execBenchmark = document.getElementById('execBenchmark');
+      const project1Completion = document.getElementById('project1Completion');
+      const project1Deadline = document.getElementById('project1Deadline');
+      const project1Team = document.getElementById('project1Team');
+      const project2Completion = document.getElementById('project2Completion');
+      const project2Deadline = document.getElementById('project2Deadline');
+      const project2Team = document.getElementById('project2Team');
+      const project3Completion = document.getElementById('project3Completion');
+      const project3Deadline = document.getElementById('project3Deadline');
+      const project3Team = document.getElementById('project3Team');
+      const riskAlertText = document.getElementById('riskAlertText');
+      const budgetThresholdText = document.getElementById('budgetThresholdText');
+      const revenueLineChart = document.getElementById('revenueLineChart');
+      const costBarChart = document.getElementById('costBarChart');
+      const esgDonutChart = document.getElementById('esgDonutChart');
+      const demandAreaChart = document.getElementById('demandAreaChart');
+
+      const DEMO_EMAIL = 'admin@aimpact.io';
+      const DEMO_PASSWORD = 'AImpact2026!';
+      const AUTH_KEY = 'authActive';
+      const STEP_INTERVAL_MS = 5000;
+      const CYCLE_DURATION_MS = 300000;
+      const TOTAL_STEPS = CYCLE_DURATION_MS / STEP_INTERVAL_MS;
+      const REPORT_DETAIL_CONFIG = {
+        performance: {
+          header: 'Performance Detail',
+          subtitle: 'Expanded monthly revenue trend with point-level values.',
+          pill: 'Performance',
+          title: 'Monthly Revenue Trend (Detailed)',
+          caption: 'Hover each point to inspect exact monthly values.',
+          type: 'line'
+        },
+        operations: {
+          header: 'Operations Detail',
+          subtitle: 'Expanded department cost breakdown with per-bar values.',
+          pill: 'Operations',
+          title: 'Department Cost Breakdown (Detailed)',
+          caption: 'Hover each bar to inspect cost by department.',
+          type: 'bar'
+        },
+        sustainability: {
+          header: 'Sustainability Detail',
+          subtitle: 'Expanded ESG split with interactive segment values.',
+          pill: 'Sustainability',
+          title: 'ESG Distribution Index (Detailed)',
+          caption: 'Hover each segment to inspect proportional share.',
+          type: 'donut'
+        },
+        forecasting: {
+          header: 'Forecasting Detail',
+          subtitle: 'Expanded demand projection with point-level values.',
+          pill: 'Forecasting',
+          title: 'Demand Projection Curve (Detailed)',
+          caption: 'Hover each point to inspect forecasted demand.',
+          type: 'area'
+        }
+      };
+      const SUBNAV_CONFIG = {
+        dashboard: {
+          title: 'Projects Subcategories',
+          items: [
+            { label: 'Portfolio KPIs', targetId: 'dashboardKpiRow' },
+            { label: 'Project Overview', targetId: 'dashboardProjectOverview' },
+            { label: 'Cost Optimization', targetId: 'dashCostOptimization' },
+            { label: 'Risk Management', targetId: 'dashRiskManagement' },
+            { label: 'Alerts Feed', targetId: 'dashAlertsFeed' }
+          ]
+        },
+        reports: {
+          title: 'Reports Subcategories',
+          items: [
+            { label: 'Revenue Trend', hash: 'reports-performance' },
+            { label: 'Cost Breakdown', hash: 'reports-operations' },
+            { label: 'ESG Index', hash: 'reports-sustainability' },
+            { label: 'Demand Forecast', hash: 'reports-forecasting' }
+          ]
+        },
+        analytics: {
+          title: 'Analytics Subcategories',
+          items: [
+            { label: 'KPI Segmentation', targetId: 'analyticsKpiSegmentation' },
+            { label: 'Trend Correlation', targetId: 'analyticsTrendCorrelation' },
+            { label: 'Forecast Diagnostics', targetId: 'analyticsForecastDiagnostics' },
+            { label: 'Model Explainability', targetId: 'analyticsModelExplainability' }
+          ]
+        },
+        settings: {
+          title: 'Settings Subcategories',
+          items: [
+            { label: 'Profile and Access', targetId: 'settingsProfileAccess' },
+            { label: 'Notification Rules', targetId: 'settingsNotificationRules' },
+            { label: 'Integration Endpoints', targetId: 'settingsIntegrationEndpoints' },
+            { label: 'System Policies', targetId: 'settingsSystemPolicies' }
+          ]
+        }
+      };
+      function randomInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+      }
+
+      function createRandomReportData() {
+        const revenueLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        const departmentLabels = ['Operations', 'Labor', 'Logistics', 'Procurement', 'Compliance', 'Training'];
+        const esgLabels = ['Environmental', 'Social', 'Governance'];
+
+        const revenueTrend = [];
+        let currentRevenue = randomInt(102, 132) / 100;
+        for (let i = 0; i < 12; i += 1) {
+          currentRevenue += randomInt(-5, 16) / 100;
+          currentRevenue = Math.max(0.95, Math.min(2.35, currentRevenue));
+          revenueTrend.push(Number(currentRevenue.toFixed(2)));
+        }
+
+        const departmentCosts = departmentLabels.map(function () {
+          return randomInt(220, 520);
+        });
+
+        const env = randomInt(34, 52);
+        const social = randomInt(24, 40);
+        const governance = Math.max(10, 100 - env - social);
+        const esgDistribution = [env, social, governance];
+
+        const demandProjection = [];
+        let currentDemand = randomInt(56, 72);
+        for (let i = 0; i < 12; i += 1) {
+          currentDemand += randomInt(-4, 9);
+          currentDemand = Math.max(48, Math.min(128, currentDemand));
+          demandProjection.push(currentDemand);
+        }
+
+        return {
+          revenueTrend: revenueTrend,
+          revenueLabels: revenueLabels,
+          departmentCosts: departmentCosts,
+          departmentLabels: departmentLabels,
+          esgDistribution: esgDistribution,
+          esgLabels: esgLabels,
+          demandProjection: demandProjection
+        };
+      }
+
+      let REPORT_DATA = createRandomReportData();
+
+      function createSimulationProfiles() {
+        const weatherSignals = ['High Wind Thu', 'Rain Fri', 'Thunderstorm Watch', 'Clear Next 48h', 'Moderate Wind Sat'];
+        const recommendationActions = [
+          'Switch rebar supplier for Lot 7 to save cost.',
+          'Pull forward cable tray orders to reduce price risk.',
+          'Keep staggered deliveries to protect margin.',
+          'Freeze non-critical purchase orders for 48 hours.',
+          'Re-sequence inspections to reduce downtime.'
+        ];
+        const riskNotes = [
+          'Delay probability increased for facade sequence.',
+          'Schedule pressure increased on retrofit handoff.',
+          'Risk pressure eased after supplier confirmation.',
+          'Mitigation required for schedule and cost pressure.',
+          'Risk trend stabilizing with updated task sequencing.'
+        ];
+        const profiles = [];
+
+        for (let i = 0; i < 5; i += 1) {
+          const onTrack = randomInt(12, 16);
+          const atRisk = randomInt(2, 5);
+          const delayed = randomInt(1, 2);
+          const projectProgress = Math.max(62, Math.min(88, randomInt(66, 84) + (onTrack - atRisk)));
+
+          const allocated = 5.2;
+          const spent = Number((4.58 + (i * 0.04) + randomInt(0, 16) / 100).toFixed(2));
+          const budgetProgress = Math.max(78, Math.min(94, Math.round((spent / allocated) * 100)));
+          const variance = Number((4.3 + randomInt(0, 34) / 10).toFixed(1));
+
+          const riskProgress = randomInt(66, 81);
+          const riskClass = riskProgress >= 76 ? 'Elevated' : 'Moderate';
+          const delayProbability = randomInt(31, 48);
+          const budgetOverrun = randomInt(18, 30);
+
+          const laborTrend = Number((2.5 + randomInt(0, 18) / 10).toFixed(1));
+          const materialIndex = Number((3.8 + randomInt(0, 28) / 10).toFixed(1));
+
+          const apiHealthValue = Number((99.2 + randomInt(0, 7) / 10).toFixed(1));
+          const apiHealthClass = apiHealthValue < 99.5 ? 'chip warn' : 'chip ok';
+          const procurementBenchmark = budgetProgress >= 90 ? 'Top quartile' : budgetProgress >= 86 ? 'Upper quartile' : 'Mid quartile';
+          const safetyAlert = riskProgress >= 78 ? 'Medium' : 'Low';
+
+          const savings = randomInt(116, 136);
+          const efficiency = randomInt(14, 19);
+          const onTime = randomInt(80, 87);
+          const roi = Number((3.2 + randomInt(0, 7) / 10).toFixed(1));
+          const recommendation = recommendationActions[i % recommendationActions.length];
+          const weather = weatherSignals[i % weatherSignals.length];
+          const riskNote = riskNotes[i % riskNotes.length];
+
+          profiles.push({
+            projectProgress: projectProgress,
+            projectProgressLabel: projectProgress + '% Portfolio On-Track Index',
+            projectDetail: onTrack + ' on track / ' + atRisk + ' at risk / ' + delayed + ' delayed',
+            projectStatus: onTrack + ' On Track / ' + atRisk + ' At Risk / ' + delayed + ' Delayed',
+            projectNote: 'AI update: Work package balancing applied across critical tasks.',
+            budgetProgress: budgetProgress,
+            budgetProgressLabel: budgetProgress + '% Budget Utilization Efficiency',
+            budgetDetail: '$' + allocated.toFixed(1) + 'M allocated / $' + spent.toFixed(2) + 'M spent',
+            budgetHealth: '$' + allocated.toFixed(1) + 'M Budget / $' + spent.toFixed(2) + 'M Spent',
+            budgetNote: 'Variance alert: Package cost +' + variance.toFixed(1) + '% vs baseline.',
+            riskProgress: riskProgress,
+            riskProgressLabel: riskProgress + ' / 100 Risk Control Score',
+            riskDetail: 'Current classification: ' + riskClass,
+            riskScore: riskProgress + ' / 100 ' + riskClass,
+            riskNote: riskNote,
+            costBudgetActual: '$' + allocated.toFixed(1) + 'M / $' + spent.toFixed(2) + 'M',
+            costLaborTrend: '+' + laborTrend.toFixed(1) + '% (30d)',
+            costMaterialIndex: 'Steel +' + materialIndex.toFixed(1) + '%',
+            costProcurementBenchmark: procurementBenchmark,
+            costRecommendation: 'AI Recommendation: ' + recommendation,
+            riskDelayProbability: delayProbability + '%',
+            riskBudgetOverrun: budgetOverrun + '%',
+            riskSafetyAlert: safetyAlert,
+            riskWeatherSignal: weather,
+            riskSuggestedAction: 'Suggested action: Adjust sequencing and maintain contingency crew window.',
+            integrationApiHealth: apiHealthValue.toFixed(1) + '%',
+            integrationApiHealthClass: apiHealthClass,
+            execSavings: '$' + savings + 'K',
+            execEfficiency: '+' + efficiency + '%',
+            execOnTime: onTime + '%',
+            execRoi: roi.toFixed(1) + 'x',
+            execBenchmark: 'Benchmark: Your delivery performance is +' + randomInt(6, 11) + '% above industry average for similar SME projects.'
+          });
+        }
+
+        return profiles;
+      }
+
+      const CREW_POOL = ['Site Crew 1', 'Site Crew 2', 'Site Crew 3', 'Field Crew A', 'Field Crew B', 'Operations Crew X', 'Operations Crew Y'];
+      const CONTRACTOR_POOL = ['Contractor Alpha', 'Contractor Beta', 'Contractor Gamma', 'Contractor Delta', 'Contractor Sigma', 'Contractor Omega', 'Contractor Nova'];
+      let SIMULATION_PROFILES = createSimulationProfiles();
+      let simulationTimerId = null;
+      let simulationStep = 0;
+      let reportsDrawn = false;
+
+      if ('scrollRestoration' in window.history) {
+        window.history.scrollRestoration = 'manual';
+      }
+
+      function forceTopScroll() {
+        window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+      }
+
+      forceTopScroll();
+      window.addEventListener('load', forceTopScroll);
+      window.addEventListener('pageshow', forceTopScroll);
+
+      const savedEmail = localStorage.getItem('rememberedEmail');
+      if (savedEmail) {
+        emailInput.value = savedEmail;
+        rememberInput.checked = true;
+      }
+
+      function isValidEmail(value) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+      }
+
+      function clearErrors() {
+        emailError.textContent = '';
+        passwordError.textContent = '';
+        formMessage.textContent = '';
+        formMessage.className = 'message';
+      }
+
+      function clearSignupErrors() {
+        signupEmailError.textContent = '';
+        signupPasswordError.textContent = '';
+        signupMessage.textContent = '';
+        signupMessage.className = 'message';
+      }
+
+      function setFieldError(field, message) {
+        if (field === 'email') {
+          emailError.textContent = message;
+        }
+
+        if (field === 'password') {
+          passwordError.textContent = message;
+        }
+      }
+
+      function setSignupFieldError(field, message) {
+        if (field === 'email') {
+          signupEmailError.textContent = message;
+        }
+
+        if (field === 'password') {
+          signupPasswordError.textContent = message;
+        }
+      }
+
+      function validateForm() {
+        clearErrors();
+        const email = emailInput.value.trim();
+        const password = passwordInput.value;
+        let valid = true;
+
+        if (!email) {
+          setFieldError('email', 'Email is required.');
+          valid = false;
+        } else if (!isValidEmail(email)) {
+          setFieldError('email', 'Enter a valid email address.');
+          valid = false;
+        }
+
+        if (!password) {
+          setFieldError('password', 'Password is required.');
+          valid = false;
+        } else if (password.length < 8) {
+          setFieldError('password', 'Password must be at least 8 characters.');
+          valid = false;
+        }
+
+        return valid;
+      }
+
+      function validateSignupForm() {
+        clearSignupErrors();
+        const email = signupEmailInput.value.trim();
+        const password = signupPasswordInput.value;
+        let valid = true;
+
+        if (!email) {
+          setSignupFieldError('email', 'Email is required.');
+          valid = false;
+        } else if (!isValidEmail(email)) {
+          setSignupFieldError('email', 'Enter a valid email address.');
+          valid = false;
+        }
+
+        if (!password) {
+          setSignupFieldError('password', 'Password is required.');
+          valid = false;
+        } else if (password.length < 8) {
+          setSignupFieldError('password', 'Password must be at least 8 characters.');
+          valid = false;
+        }
+
+        return valid;
+      }
+
+      function pickUnique(source, count) {
+        const pool = source.slice();
+        const selected = [];
+        for (let i = 0; i < count; i += 1) {
+          const index = randomInt(0, pool.length - 1);
+          selected.push(pool.splice(index, 1)[0]);
+        }
+        return selected;
+      }
+
+      function randomDeadlineLabel(monthOffsetMin, monthOffsetMax) {
+        const base = new Date();
+        const monthsAhead = randomInt(monthOffsetMin, monthOffsetMax);
+        const day = randomInt(2, 28);
+        const date = new Date(base.getFullYear(), base.getMonth() + monthsAhead, day);
+        const month = date.toLocaleString([], { month: 'short' });
+        return month + ' ' + date.getDate();
+      }
+
+      function randomizeProjectOverviewData() {
+        const crews = pickUnique(CREW_POOL, 3);
+        const contractors = pickUnique(CONTRACTOR_POOL, 3);
+
+        const completion1 = randomInt(61, 78);
+        const completion2 = randomInt(45, 62);
+        const completion3 = randomInt(32, 48);
+
+        project1Completion.textContent = 'Completion: ' + completion1 + '%';
+        project2Completion.textContent = 'Completion: ' + completion2 + '%';
+        project3Completion.textContent = 'Completion: ' + completion3 + '%';
+
+        project1Deadline.textContent = 'Deadline: ' + randomDeadlineLabel(2, 4);
+        project2Deadline.textContent = 'Deadline: ' + randomDeadlineLabel(1, 3);
+        project3Deadline.textContent = 'Deadline: ' + randomDeadlineLabel(1, 2);
+
+        project1Team.textContent = 'Team: ' + crews[0] + ' + ' + contractors[0];
+        project2Team.textContent = 'Team: ' + crews[1] + ' + ' + contractors[1];
+        project3Team.textContent = 'Team: ' + crews[2] + ' + ' + contractors[2];
+      }
+
+      function prepareDashboardForNewLogin() {
+        SIMULATION_PROFILES = createSimulationProfiles();
+        simulationStep = 0;
+        randomizeProjectOverviewData();
+        riskAlertText.textContent = 'Tower B facade delay probability crossed ' + randomInt(31, 48) + '%.';
+        budgetThresholdText.textContent = 'Concrete package exceeded threshold by ' + (4 + randomInt(0, 35) / 10).toFixed(1) + '%.';
+        applySimulationSnapshot(simulationStep);
+      }
+
+      function activateSubnavChip(targetId) {
+        subNavGroup.querySelectorAll('.sub-nav-chip').forEach(function (chip) {
+          chip.classList.toggle('active', chip.getAttribute('data-sub-target') === targetId);
+        });
+      }
+
+      function scrollToSubTarget(targetId) {
+        const target = document.getElementById(targetId);
+        if (!target) {
+          return;
+        }
+        const topOffset = 120;
+        const absoluteTop = window.scrollY + target.getBoundingClientRect().top - topOffset;
+        window.scrollTo({ top: Math.max(0, absoluteTop), left: 0, behavior: 'smooth' });
+        activateSubnavChip(targetId);
+      }
+
+      function buildSubnav(viewName) {
+        const config = SUBNAV_CONFIG[viewName];
+        subNavGroup.innerHTML = '';
+        if (!config) {
+          subNavbar.classList.add('hidden');
+          return;
+        }
+
+        config.items.forEach(function (item, index) {
+          const button = document.createElement('button');
+          button.type = 'button';
+          const isActive = item.hash ? ('#' + item.hash) === window.location.hash : index === 0;
+          button.className = 'sub-nav-chip' + (isActive ? ' active' : '');
+          button.textContent = item.label;
+          if (item.targetId) {
+            button.setAttribute('data-sub-target', item.targetId);
+          }
+          if (item.hash) {
+            button.setAttribute('data-sub-hash', item.hash);
+          }
+          button.addEventListener('click', function () {
+            if (item.hash) {
+              window.location.hash = item.hash;
+              return;
+            }
+            scrollToSubTarget(item.targetId);
+          });
+          subNavGroup.appendChild(button);
+        });
+        subNavbar.classList.remove('hidden');
+      }
+
+      function setupHomeCatchphraseWords() {
+        if (!homeCatchphrase || homeCatchphrase.getAttribute('data-words-ready') === '1') {
+          return;
+        }
+        const words = homeCatchphrase.textContent.trim().split(/\s+/);
+        homeCatchphrase.innerHTML = words.map(function (word, index) {
+          return '<span class="hero-word" style="--word-delay:' + index + '">' + word + '</span>';
+        }).join(' ');
+        homeCatchphrase.setAttribute('data-words-ready', '1');
+      }
+
+      function playHomeCatchphraseAnimation() {
+        if (!homeCatchphrase) {
+          return;
+        }
+        setupHomeCatchphraseWords();
+        homeCatchphrase.classList.remove('is-animating');
+        void homeCatchphrase.offsetWidth;
+        homeCatchphrase.classList.add('is-animating');
+      }
+
+      function showView(viewName) {
+        let targetView = homeView;
+
+        if (viewName === 'dashboard') {
+          homeView.classList.add('hidden');
+          loginView.classList.add('hidden');
+          reportsView.classList.add('hidden');
+          reportsDetailView.classList.add('hidden');
+          analyticsView.classList.add('hidden');
+          settingsView.classList.add('hidden');
+          dashboardView.classList.remove('hidden');
+          document.title = 'AImpact4SMEs | Dashboard';
+          targetView = dashboardView;
+        } else if (viewName === 'reports') {
+          homeView.classList.add('hidden');
+          loginView.classList.add('hidden');
+          dashboardView.classList.add('hidden');
+          analyticsView.classList.add('hidden');
+          settingsView.classList.add('hidden');
+          reportsDetailView.classList.add('hidden');
+          reportsView.classList.remove('hidden');
+          document.title = 'AImpact4SMEs | Data Statistics and Reports';
+          targetView = reportsView;
+        } else if (viewName === 'reportsDetail') {
+          homeView.classList.add('hidden');
+          loginView.classList.add('hidden');
+          dashboardView.classList.add('hidden');
+          reportsView.classList.add('hidden');
+          analyticsView.classList.add('hidden');
+          settingsView.classList.add('hidden');
+          reportsDetailView.classList.remove('hidden');
+          document.title = 'AImpact4SMEs | Report Detail';
+          targetView = reportsDetailView;
+        } else if (viewName === 'analytics') {
+          homeView.classList.add('hidden');
+          loginView.classList.add('hidden');
+          dashboardView.classList.add('hidden');
+          reportsView.classList.add('hidden');
+          reportsDetailView.classList.add('hidden');
+          settingsView.classList.add('hidden');
+          analyticsView.classList.remove('hidden');
+          document.title = 'AImpact4SMEs | Analytics';
+          targetView = analyticsView;
+        } else if (viewName === 'settings') {
+          homeView.classList.add('hidden');
+          loginView.classList.add('hidden');
+          dashboardView.classList.add('hidden');
+          reportsView.classList.add('hidden');
+          reportsDetailView.classList.add('hidden');
+          analyticsView.classList.add('hidden');
+          settingsView.classList.remove('hidden');
+          document.title = 'AImpact4SMEs | Settings';
+          targetView = settingsView;
+        } else if (viewName === 'login' || viewName === 'signup') {
+          homeView.classList.add('hidden');
+          dashboardView.classList.add('hidden');
+          reportsView.classList.add('hidden');
+          reportsDetailView.classList.add('hidden');
+          analyticsView.classList.add('hidden');
+          settingsView.classList.add('hidden');
+          loginView.classList.remove('hidden');
+          document.title = viewName === 'signup' ? 'AImpact4SMEs | Sign up' : 'AImpact4SMEs | Sign in';
+          targetView = loginView;
+        } else {
+          dashboardView.classList.add('hidden');
+          reportsView.classList.add('hidden');
+          reportsDetailView.classList.add('hidden');
+          analyticsView.classList.add('hidden');
+          settingsView.classList.add('hidden');
+          homeView.classList.remove('hidden');
+          loginView.classList.add('hidden');
+          document.title = 'AImpact4SMEs | Home';
+          targetView = homeView;
+        }
+
+        if (viewName === 'dashboard' || viewName === 'reports' || viewName === 'reportsDetail' || viewName === 'analytics' || viewName === 'settings') {
+          document.body.classList.remove('home-mode');
+          globalNavbar.classList.remove('hidden');
+          document.body.classList.add('app-with-subnav');
+          buildSubnav(viewName === 'reportsDetail' ? 'reports' : viewName);
+        } else if (viewName === 'home') {
+          document.body.classList.add('home-mode');
+          globalNavbar.classList.add('hidden');
+          document.body.classList.remove('app-with-subnav');
+          subNavbar.classList.add('hidden');
+          playHomeCatchphraseAnimation();
+        } else {
+          document.body.classList.remove('home-mode');
+          globalNavbar.classList.add('hidden');
+          document.body.classList.remove('app-with-subnav');
+          subNavbar.classList.add('hidden');
+        }
+
+        targetView.classList.remove('page-enter');
+        void targetView.offsetWidth;
+        targetView.classList.add('page-enter');
+        window.requestAnimationFrame(function () {
+          animateBubblesIn(targetView);
+        });
+
+        if (document.activeElement && typeof document.activeElement.blur === 'function') {
+          document.activeElement.blur();
+        }
+        window.requestAnimationFrame(function () {
+          window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+        });
+      }
+
+      function syncNavbarActive() {
+        navProjectsChip.classList.remove('active');
+        navAnalyticsChip.classList.remove('active');
+        navReportsChip.classList.remove('active');
+        navSettingsChip.classList.remove('active');
+
+        if (window.location.hash.indexOf('#reports') === 0 && isAuthenticated()) {
+          navReportsChip.classList.add('active');
+        } else if (window.location.hash === '#analytics' && isAuthenticated()) {
+          navAnalyticsChip.classList.add('active');
+        } else if (window.location.hash === '#settings' && isAuthenticated()) {
+          navSettingsChip.classList.add('active');
+        } else {
+          navProjectsChip.classList.add('active');
+        }
+      }
+
+      function isAuthenticated() {
+        return sessionStorage.getItem(AUTH_KEY) === '1';
+      }
+
+      function formatTimestamp(value) {
+        return value.toLocaleString([], {
+          year: 'numeric',
+          month: 'short',
+          day: '2-digit',
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit'
+        });
+      }
+
+      function applySimulationSnapshot(step) {
+        const snapshot = SIMULATION_PROFILES[step % SIMULATION_PROFILES.length];
+        const elapsedSeconds = step * (STEP_INTERVAL_MS / 1000);
+        const cycleSeconds = CYCLE_DURATION_MS / 1000;
+
+        kpiProjectProgressFill.style.width = snapshot.projectProgress + '%';
+        kpiProjectProgressLabel.textContent = snapshot.projectProgressLabel;
+        kpiProjectDetail.textContent = snapshot.projectDetail;
+        kpiBudgetProgressFill.style.width = snapshot.budgetProgress + '%';
+        kpiBudgetProgressLabel.textContent = snapshot.budgetProgressLabel;
+        kpiBudgetDetail.textContent = snapshot.budgetDetail;
+        kpiRiskProgressFill.style.width = snapshot.riskProgress + '%';
+        kpiRiskProgressLabel.textContent = snapshot.riskProgressLabel;
+        kpiRiskDetail.textContent = snapshot.riskDetail;
+        costBudgetActual.textContent = snapshot.costBudgetActual;
+        costLaborTrend.textContent = snapshot.costLaborTrend;
+        costMaterialIndex.textContent = snapshot.costMaterialIndex;
+        costProcurementBenchmark.textContent = snapshot.costProcurementBenchmark;
+        costRecommendation.textContent = snapshot.costRecommendation;
+        riskDelayProbability.textContent = snapshot.riskDelayProbability;
+        riskBudgetOverrun.textContent = snapshot.riskBudgetOverrun;
+        riskSafetyAlert.textContent = snapshot.riskSafetyAlert;
+        riskWeatherSignal.textContent = snapshot.riskWeatherSignal;
+        riskSuggestedAction.textContent = snapshot.riskSuggestedAction;
+        integrationApiHealth.textContent = snapshot.integrationApiHealth;
+        integrationApiHealth.className = snapshot.integrationApiHealthClass;
+        integrationLastSync.textContent = 'Just now';
+        execSavings.textContent = snapshot.execSavings;
+        execEfficiency.textContent = snapshot.execEfficiency;
+        execOnTime.textContent = snapshot.execOnTime;
+        execRoi.textContent = snapshot.execRoi;
+        execBenchmark.textContent = snapshot.execBenchmark;
+        dashTimestamp.textContent = 'Updated: ' + formatTimestamp(new Date()) + ' | Simulated cycle: ' + elapsedSeconds + 's / ' + cycleSeconds + 's';
+      }
+
+      function startSimulationLoop() {
+        if (simulationTimerId !== null) {
+          return;
+        }
+
+        applySimulationSnapshot(simulationStep);
+        simulationTimerId = window.setInterval(function () {
+          simulationStep = (simulationStep + 1) % TOTAL_STEPS;
+          applySimulationSnapshot(simulationStep);
+        }, STEP_INTERVAL_MS);
+      }
+
+      function stopSimulationLoop() {
+        if (simulationTimerId !== null) {
+          window.clearInterval(simulationTimerId);
+          simulationTimerId = null;
+        }
+      }
+
+      function setupCanvas(canvas) {
+        const ratio = window.devicePixelRatio || 1;
+        const cssWidth = Math.max(320, Math.floor(canvas.clientWidth));
+        const cssHeight = Math.max(160, Math.floor(canvas.clientHeight));
+        canvas.width = Math.floor(cssWidth * ratio);
+        canvas.height = Math.floor(cssHeight * ratio);
+        const ctx = canvas.getContext('2d');
+        ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+        return { ctx: ctx, width: cssWidth, height: cssHeight };
+      }
+
+      function drawChartGrid(ctx, width, height) {
+        ctx.strokeStyle = 'rgba(74, 109, 168, 0.24)';
+        ctx.lineWidth = 1;
+        for (let i = 0; i <= 4; i += 1) {
+          const y = 16 + ((height - 32) * i) / 4;
+          ctx.beginPath();
+          ctx.moveTo(28, y);
+          ctx.lineTo(width - 12, y);
+          ctx.stroke();
+        }
+      }
+
+      function drawRevenueLineChart() {
+        const setup = setupCanvas(revenueLineChart);
+        const ctx = setup.ctx;
+        const width = setup.width;
+        const height = setup.height;
+        const data = REPORT_DATA.revenueTrend;
+        const max = Math.max.apply(null, data);
+        const min = Math.min.apply(null, data);
+        const span = max - min || 1;
+
+        ctx.clearRect(0, 0, width, height);
+        drawChartGrid(ctx, width, height);
+        ctx.font = '11px "Plus Jakarta Sans", sans-serif';
+        ctx.fillStyle = '#4b6695';
+        ctx.fillText('USD (Millions)', 30, 14);
+
+        const points = data.map(function (value, index) {
+          const x = 30 + (index * (width - 50)) / (data.length - 1);
+          const y = height - 18 - ((value - min) / span) * (height - 44);
+          return { x: x, y: y };
+        });
+
+        ctx.beginPath();
+        points.forEach(function (point, index) {
+          if (index === 0) {
+            ctx.moveTo(point.x, point.y);
+          } else {
+            ctx.lineTo(point.x, point.y);
+          }
+        });
+        ctx.strokeStyle = '#1d4da1';
+        ctx.lineWidth = 3;
+        ctx.stroke();
+
+        points.forEach(function (point) {
+          ctx.beginPath();
+          ctx.arc(point.x, point.y, 3, 0, Math.PI * 2);
+          ctx.fillStyle = '#173d80';
+          ctx.fill();
+        });
+
+        const lastPoint = points[points.length - 1];
+        ctx.fillStyle = '#15386f';
+        ctx.font = '700 11px "Plus Jakarta Sans", sans-serif';
+        ctx.fillText('$' + data[data.length - 1].toFixed(2) + 'M', lastPoint.x - 18, lastPoint.y - 10);
+
+        ctx.font = '10px "Plus Jakarta Sans", sans-serif';
+        ctx.fillStyle = '#4b6695';
+        for (let i = 0; i < REPORT_DATA.revenueLabels.length; i += 2) {
+          const x = 30 + (i * (width - 50)) / (data.length - 1);
+          ctx.fillText(REPORT_DATA.revenueLabels[i], x - 10, height - 4);
+        }
+      }
+
+      function drawCostBarChart() {
+        const setup = setupCanvas(costBarChart);
+        const ctx = setup.ctx;
+        const width = setup.width;
+        const height = setup.height;
+        const data = REPORT_DATA.departmentCosts;
+        const labels = REPORT_DATA.departmentLabels;
+        const max = Math.max.apply(null, data);
+
+        ctx.clearRect(0, 0, width, height);
+        drawChartGrid(ctx, width, height);
+        ctx.font = '11px "Plus Jakarta Sans", sans-serif';
+        ctx.fillStyle = '#4b6695';
+        ctx.fillText('Cost (USD Thousands)', 30, 14);
+
+        const chartWidth = width - 40;
+        const barWidth = chartWidth / data.length - 10;
+        data.forEach(function (value, index) {
+          const x = 28 + index * (barWidth + 10);
+          const h = ((height - 56) * value) / max;
+          const y = height - 24 - h;
+          ctx.fillStyle = 'rgba(29, 77, 161, 0.82)';
+          ctx.fillRect(x, y, barWidth, h);
+          ctx.fillStyle = '#15386f';
+          ctx.font = '700 10px "Plus Jakarta Sans", sans-serif';
+          ctx.fillText('$' + value + 'k', x + 2, y - 6);
+          ctx.fillStyle = '#35588f';
+          ctx.font = '10px "Plus Jakarta Sans", sans-serif';
+          ctx.fillText(labels[index].slice(0, 6), x, height - 8);
+        });
+      }
+
+      function drawEsgDonutChart() {
+        const setup = setupCanvas(esgDonutChart);
+        const ctx = setup.ctx;
+        const width = setup.width;
+        const height = setup.height;
+        const data = REPORT_DATA.esgDistribution;
+        const total = data.reduce(function (sum, value) { return sum + value; }, 0);
+        const cx = Math.floor(width / 2);
+        const cy = Math.floor(height / 2);
+        const radius = Math.min(width, height) * 0.34;
+        const colors = ['#1d4da1', '#3b68b5', '#6f92ca'];
+
+        ctx.clearRect(0, 0, width, height);
+
+        let startAngle = -Math.PI / 2;
+        data.forEach(function (value, index) {
+          const angle = (value / total) * Math.PI * 2;
+          ctx.beginPath();
+          ctx.moveTo(cx, cy);
+          ctx.arc(cx, cy, radius, startAngle, startAngle + angle);
+          ctx.closePath();
+          ctx.fillStyle = colors[index];
+          ctx.fill();
+          startAngle += angle;
+        });
+
+        ctx.beginPath();
+        ctx.arc(cx, cy, radius * 0.56, 0, Math.PI * 2);
+        ctx.fillStyle = '#eef4ff';
+        ctx.fill();
+
+        ctx.fillStyle = '#15386f';
+        ctx.font = '700 13px "Plus Jakarta Sans", sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('E / S / G', cx, cy + 4);
+
+        ctx.textAlign = 'left';
+        ctx.font = '11px "Plus Jakarta Sans", sans-serif';
+        REPORT_DATA.esgLabels.forEach(function (label, index) {
+          const x = 20;
+          const y = 20 + index * 18;
+          ctx.fillStyle = colors[index];
+          ctx.fillRect(x, y - 8, 10, 10);
+          ctx.fillStyle = '#35588f';
+          ctx.fillText(label + ' ' + data[index] + '%', x + 16, y);
+        });
+      }
+
+      function drawDemandAreaChart() {
+        const setup = setupCanvas(demandAreaChart);
+        const ctx = setup.ctx;
+        const width = setup.width;
+        const height = setup.height;
+        const data = REPORT_DATA.demandProjection;
+        const max = Math.max.apply(null, data);
+        const min = Math.min.apply(null, data);
+        const span = max - min || 1;
+
+        ctx.clearRect(0, 0, width, height);
+        drawChartGrid(ctx, width, height);
+        ctx.font = '11px "Plus Jakarta Sans", sans-serif';
+        ctx.fillStyle = '#4b6695';
+        ctx.fillText('Demand Index', 30, 14);
+
+        const points = data.map(function (value, index) {
+          const x = 30 + (index * (width - 50)) / (data.length - 1);
+          const y = height - 20 - ((value - min) / span) * (height - 50);
+          return { x: x, y: y };
+        });
+
+        ctx.beginPath();
+        ctx.moveTo(points[0].x, height - 20);
+        points.forEach(function (point) {
+          ctx.lineTo(point.x, point.y);
+        });
+        ctx.lineTo(points[points.length - 1].x, height - 20);
+        ctx.closePath();
+        const gradient = ctx.createLinearGradient(0, 18, 0, height - 20);
+        gradient.addColorStop(0, 'rgba(29, 77, 161, 0.45)');
+        gradient.addColorStop(1, 'rgba(29, 77, 161, 0.06)');
+        ctx.fillStyle = gradient;
+        ctx.fill();
+
+        ctx.beginPath();
+        points.forEach(function (point, index) {
+          if (index === 0) {
+            ctx.moveTo(point.x, point.y);
+          } else {
+            ctx.lineTo(point.x, point.y);
+          }
+        });
+        ctx.strokeStyle = '#173d80';
+        ctx.lineWidth = 2.5;
+        ctx.stroke();
+
+        const peak = Math.max.apply(null, data);
+        const peakIndex = data.indexOf(peak);
+        const peakPoint = points[peakIndex];
+        ctx.fillStyle = '#15386f';
+        ctx.font = '700 11px "Plus Jakarta Sans", sans-serif';
+        ctx.fillText('Peak ' + peak, peakPoint.x - 16, peakPoint.y - 10);
+
+        ctx.font = '10px "Plus Jakarta Sans", sans-serif';
+        ctx.fillStyle = '#4b6695';
+        for (let i = 0; i < REPORT_DATA.revenueLabels.length; i += 3) {
+          const x = 30 + (i * (width - 50)) / (data.length - 1);
+          ctx.fillText(REPORT_DATA.revenueLabels[i], x - 10, height - 4);
+        }
+      }
+
+      function drawReportsCharts() {
+        drawRevenueLineChart();
+        drawCostBarChart();
+        drawEsgDonutChart();
+        drawDemandAreaChart();
+        reportsDrawn = true;
+      }
+
+      function randomizeReportData() {
+        REPORT_DATA = createRandomReportData();
+      }
+
+      function createSvgElement(tagName) {
+        return document.createElementNS('http://www.w3.org/2000/svg', tagName);
+      }
+
+      function hideDetailTooltip() {
+        detailChartTooltip.classList.remove('is-visible');
+      }
+
+      function showDetailTooltip(event, text) {
+        const wrapRect = detailChartSvg.getBoundingClientRect();
+        detailChartTooltip.textContent = text;
+        detailChartTooltip.style.left = (event.clientX - wrapRect.left) + 'px';
+        detailChartTooltip.style.top = (event.clientY - wrapRect.top) + 'px';
+        detailChartTooltip.classList.add('is-visible');
+      }
+
+      function renderDetailLineOrArea(isArea) {
+        const labels = REPORT_DATA.revenueLabels;
+        const data = isArea ? REPORT_DATA.demandProjection : REPORT_DATA.revenueTrend;
+        const left = 72;
+        const right = 910;
+        const top = 34;
+        const bottom = 328;
+        const max = Math.max.apply(null, data);
+        const min = Math.min.apply(null, data);
+        const span = max - min || 1;
+
+        const points = data.map(function (value, index) {
+          const x = left + (index * (right - left)) / (data.length - 1);
+          const y = bottom - ((value - min) / span) * (bottom - top);
+          return { x: x, y: y, value: value, label: labels[index] };
+        });
+
+        for (let i = 0; i <= 5; i += 1) {
+          const y = top + (i * (bottom - top)) / 5;
+          const grid = createSvgElement('line');
+          grid.setAttribute('x1', String(left));
+          grid.setAttribute('x2', String(right));
+          grid.setAttribute('y1', String(y));
+          grid.setAttribute('y2', String(y));
+          grid.setAttribute('stroke', 'rgba(66, 98, 156, 0.22)');
+          detailChartSvg.appendChild(grid);
+        }
+
+        if (isArea) {
+          const areaPath = createSvgElement('path');
+          const areaD = ['M', points[0].x, bottom]
+            .concat(points.map(function (point) { return ['L', point.x, point.y]; }).flat())
+            .concat(['L', points[points.length - 1].x, bottom, 'Z'])
+            .join(' ');
+          areaPath.setAttribute('d', areaD);
+          areaPath.setAttribute('fill', 'rgba(29, 77, 161, 0.2)');
+          detailChartSvg.appendChild(areaPath);
+        }
+
+        const line = createSvgElement('polyline');
+        line.setAttribute('fill', 'none');
+        line.setAttribute('stroke', '#1d4da1');
+        line.setAttribute('stroke-width', '3');
+        line.setAttribute('points', points.map(function (point) {
+          return point.x + ',' + point.y;
+        }).join(' '));
+        detailChartSvg.appendChild(line);
+
+        points.forEach(function (point) {
+          const dot = createSvgElement('circle');
+          dot.setAttribute('cx', String(point.x));
+          dot.setAttribute('cy', String(point.y));
+          dot.setAttribute('r', '6');
+          dot.setAttribute('fill', '#153d84');
+          dot.addEventListener('mouseenter', function (event) {
+            const suffix = isArea ? '' : 'M';
+            showDetailTooltip(event, point.label + ': ' + point.value + suffix);
+          });
+          dot.addEventListener('mousemove', function (event) {
+            const suffix = isArea ? '' : 'M';
+            showDetailTooltip(event, point.label + ': ' + point.value + suffix);
+          });
+          dot.addEventListener('mouseleave', hideDetailTooltip);
+          detailChartSvg.appendChild(dot);
+        });
+
+        labels.forEach(function (label, index) {
+          if (index % 2 !== 0) {
+            return;
+          }
+          const x = left + (index * (right - left)) / (labels.length - 1);
+          const tick = createSvgElement('text');
+          tick.setAttribute('x', String(x));
+          tick.setAttribute('y', '356');
+          tick.setAttribute('text-anchor', 'middle');
+          tick.setAttribute('fill', '#4b6695');
+          tick.setAttribute('font-size', '12');
+          tick.textContent = label;
+          detailChartSvg.appendChild(tick);
+        });
+      }
+
+      function renderDetailBar() {
+        const data = REPORT_DATA.departmentCosts;
+        const labels = REPORT_DATA.departmentLabels;
+        const left = 72;
+        const right = 910;
+        const top = 32;
+        const bottom = 328;
+        const max = Math.max.apply(null, data);
+        const barSpace = (right - left) / data.length;
+        const barWidth = Math.max(36, barSpace - 18);
+
+        for (let i = 0; i <= 5; i += 1) {
+          const y = top + (i * (bottom - top)) / 5;
+          const grid = createSvgElement('line');
+          grid.setAttribute('x1', String(left));
+          grid.setAttribute('x2', String(right));
+          grid.setAttribute('y1', String(y));
+          grid.setAttribute('y2', String(y));
+          grid.setAttribute('stroke', 'rgba(66, 98, 156, 0.22)');
+          detailChartSvg.appendChild(grid);
+        }
+
+        data.forEach(function (value, index) {
+          const x = left + (index * barSpace) + (barSpace - barWidth) / 2;
+          const h = ((bottom - top) * value) / max;
+          const y = bottom - h;
+          const bar = createSvgElement('rect');
+          bar.setAttribute('x', String(x));
+          bar.setAttribute('y', String(y));
+          bar.setAttribute('width', String(barWidth));
+          bar.setAttribute('height', String(h));
+          bar.setAttribute('fill', 'rgba(29, 77, 161, 0.82)');
+          bar.addEventListener('mouseenter', function (event) {
+            showDetailTooltip(event, labels[index] + ': $' + value + 'k');
+          });
+          bar.addEventListener('mousemove', function (event) {
+            showDetailTooltip(event, labels[index] + ': $' + value + 'k');
+          });
+          bar.addEventListener('mouseleave', hideDetailTooltip);
+          detailChartSvg.appendChild(bar);
+
+          const label = createSvgElement('text');
+          label.setAttribute('x', String(x + (barWidth / 2)));
+          label.setAttribute('y', '356');
+          label.setAttribute('text-anchor', 'middle');
+          label.setAttribute('fill', '#4b6695');
+          label.setAttribute('font-size', '12');
+          label.textContent = labels[index].slice(0, 6);
+          detailChartSvg.appendChild(label);
+        });
+      }
+
+      function renderDetailDonut() {
+        const data = REPORT_DATA.esgDistribution;
+        const labels = REPORT_DATA.esgLabels;
+        const total = data.reduce(function (sum, value) { return sum + value; }, 0);
+        const cx = 420;
+        const cy = 192;
+        const radius = 120;
+        const inner = 64;
+        const colors = ['#1d4da1', '#3b68b5', '#6f92ca'];
+        let startAngle = -Math.PI / 2;
+
+        data.forEach(function (value, index) {
+          const angle = (value / total) * Math.PI * 2;
+          const endAngle = startAngle + angle;
+          const x1 = cx + (radius * Math.cos(startAngle));
+          const y1 = cy + (radius * Math.sin(startAngle));
+          const x2 = cx + (radius * Math.cos(endAngle));
+          const y2 = cy + (radius * Math.sin(endAngle));
+          const x3 = cx + (inner * Math.cos(endAngle));
+          const y3 = cy + (inner * Math.sin(endAngle));
+          const x4 = cx + (inner * Math.cos(startAngle));
+          const y4 = cy + (inner * Math.sin(startAngle));
+          const largeArc = angle > Math.PI ? 1 : 0;
+          const path = createSvgElement('path');
+          const d = [
+            'M', x1, y1,
+            'A', radius, radius, 0, largeArc, 1, x2, y2,
+            'L', x3, y3,
+            'A', inner, inner, 0, largeArc, 0, x4, y4,
+            'Z'
+          ].join(' ');
+          path.setAttribute('d', d);
+          path.setAttribute('fill', colors[index]);
+          path.addEventListener('mouseenter', function (event) {
+            showDetailTooltip(event, labels[index] + ': ' + value + '%');
+          });
+          path.addEventListener('mousemove', function (event) {
+            showDetailTooltip(event, labels[index] + ': ' + value + '%');
+          });
+          path.addEventListener('mouseleave', hideDetailTooltip);
+          detailChartSvg.appendChild(path);
+          startAngle = endAngle;
+        });
+
+        const centerText = createSvgElement('text');
+        centerText.setAttribute('x', String(cx));
+        centerText.setAttribute('y', String(cy + 4));
+        centerText.setAttribute('text-anchor', 'middle');
+        centerText.setAttribute('fill', '#15386f');
+        centerText.setAttribute('font-size', '16');
+        centerText.setAttribute('font-weight', '700');
+        centerText.textContent = 'E / S / G';
+        detailChartSvg.appendChild(centerText);
+      }
+
+      function renderReportDetail(detailKey) {
+        const detail = REPORT_DETAIL_CONFIG[detailKey] || REPORT_DETAIL_CONFIG.performance;
+        reportDetailHeaderTitle.textContent = detail.header;
+        reportDetailHeaderSubtitle.textContent = detail.subtitle;
+        reportDetailPill.textContent = detail.pill;
+        reportDetailTitle.textContent = detail.title;
+        reportDetailCaption.textContent = detail.caption;
+        detailChartSvg.innerHTML = '';
+        hideDetailTooltip();
+
+        if (detail.type === 'bar') {
+          renderDetailBar();
+        } else if (detail.type === 'donut') {
+          renderDetailDonut();
+        } else if (detail.type === 'area') {
+          renderDetailLineOrArea(true);
+        } else {
+          renderDetailLineOrArea(false);
+        }
+      }
+
+      function animateBubblesIn(viewElement) {
+        // Future pages can opt in by adding data-bubble on any element.
+        const bubbleSelector = [
+          '.kpi-card',
+          '.panel-card',
+          '.mini-box',
+          '.overview-list li',
+          '.metric-list li',
+          '.integration-list li',
+          '.alerts-list li',
+          '.timeline-list li',
+          '.milestone-list li',
+          '.insight-list li',
+          '[data-bubble]'
+        ].join(',');
+        const bubbles = viewElement.querySelectorAll(bubbleSelector);
+
+        bubbles.forEach(function (bubble) {
+          const rect = bubble.getBoundingClientRect();
+          const weighted = (rect.left * 0.08) + (rect.top * 0.12);
+          const delay = Math.max(0, Math.min(520, Math.round(weighted)));
+          bubble.style.setProperty('--bubble-delay', delay + 'ms');
+          bubble.classList.remove('bubble-enter');
+          void bubble.offsetWidth;
+          bubble.classList.add('bubble-enter');
+        });
+      }
+
+      function routeFromHash() {
+        const detailMatch = window.location.hash.match(/^#reports-(performance|operations|sustainability|forecasting)$/);
+
+        if (window.location.hash === '#dashboard' && isAuthenticated()) {
+          showView('dashboard');
+          startSimulationLoop();
+        } else if (window.location.hash === '#reports' && isAuthenticated()) {
+          showView('reports');
+          stopSimulationLoop();
+          randomizeReportData();
+          drawReportsCharts();
+        } else if (detailMatch && isAuthenticated()) {
+          showView('reportsDetail');
+          stopSimulationLoop();
+          randomizeReportData();
+          renderReportDetail(detailMatch[1]);
+        } else if (window.location.hash === '#analytics' && isAuthenticated()) {
+          showView('analytics');
+          stopSimulationLoop();
+        } else if (window.location.hash === '#settings' && isAuthenticated()) {
+          showView('settings');
+          stopSimulationLoop();
+        } else if (window.location.hash === '#signup') {
+          showView('signup');
+          stopSimulationLoop();
+          window.requestAnimationFrame(function () {
+            signupStart.scrollIntoView({ block: 'start', behavior: 'auto' });
+            signupEmailInput.focus({ preventScroll: true });
+          });
+        } else if (window.location.hash === '#login') {
+          showView('login');
+          stopSimulationLoop();
+        } else if (window.location.hash === '#home' || window.location.hash === '') {
+          showView('home');
+          stopSimulationLoop();
+        } else {
+          showView('home');
+          stopSimulationLoop();
+        }
+        syncNavbarActive();
+      }
+
+      togglePasswordBtn.addEventListener('click', function () {
+        const hidden = passwordInput.type === 'password';
+        passwordInput.type = hidden ? 'text' : 'password';
+        togglePasswordBtn.textContent = hidden ? 'Hide' : 'Show';
+        togglePasswordBtn.setAttribute('aria-label', hidden ? 'Hide password' : 'Show password');
+      });
+
+      form.addEventListener('submit', async function (event) {
+        event.preventDefault();
+
+        if (!validateForm()) {
+          return;
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Signing in...';
+
+        const email = emailInput.value.trim();
+        const password = passwordInput.value;
+
+        try {
+          const response = await fetch('/api/login', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email: email, password: password })
+          });
+          const data = await response.json();
+
+          if (!response.ok) {
+            formMessage.textContent = data.message || 'Invalid email or password.';
+            formMessage.className = 'message error';
+            return;
+          }
+
+          const signedInEmail = data.email || email;
+          if (rememberInput.checked) {
+            localStorage.setItem('rememberedEmail', signedInEmail);
+          } else {
+            localStorage.removeItem('rememberedEmail');
+          }
+
+          sessionStorage.setItem(AUTH_KEY, '1');
+          prepareDashboardForNewLogin();
+          dashUser.textContent = 'Signed in as ' + signedInEmail;
+          formMessage.textContent = 'Login successful. Redirecting to your dashboard...';
+          formMessage.className = 'message success';
+
+          setTimeout(function () {
+            showView('dashboard');
+            window.location.hash = 'dashboard';
+          }, 500);
+        } catch (error) {
+          const demoSuccess = email.toLowerCase() === DEMO_EMAIL && password === DEMO_PASSWORD;
+          if (demoSuccess) {
+            sessionStorage.setItem(AUTH_KEY, '1');
+            prepareDashboardForNewLogin();
+            dashUser.textContent = 'Signed in as ' + email;
+            formMessage.textContent = 'Login successful (offline mode). Redirecting...';
+            formMessage.className = 'message success';
+
+            setTimeout(function () {
+              showView('dashboard');
+              window.location.hash = 'dashboard';
+            }, 500);
+          } else {
+            formMessage.textContent = 'Could not reach server. Start server.js and try again.';
+            formMessage.className = 'message error';
+          }
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Sign in';
+        }
+      });
+
+      signupForm.addEventListener('submit', async function (event) {
+        event.preventDefault();
+
+        if (!validateSignupForm()) {
+          return;
+        }
+
+        signupBtn.disabled = true;
+        signupBtn.textContent = 'Creating account...';
+
+        try {
+          const response = await fetch('/api/signup', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              email: signupEmailInput.value.trim(),
+              password: signupPasswordInput.value
+            })
+          });
+
+          const data = await response.json();
+
+          if (!response.ok) {
+            signupMessage.textContent = data.message || 'Sign up failed.';
+            signupMessage.className = 'message error';
+            return;
+          }
+
+          signupMessage.textContent = data.message || 'Account created successfully.';
+          signupMessage.className = 'message success';
+          signupForm.reset();
+        } catch (error) {
+          signupMessage.textContent = 'Could not reach server. Start server.js and try again.';
+          signupMessage.className = 'message error';
+        } finally {
+          signupBtn.disabled = false;
+          signupBtn.textContent = 'Sign up';
+        }
+      });
+
+      openReportsBtn.addEventListener('click', function () {
+        window.location.hash = 'reports';
+      });
+
+      reportLaunchCards.forEach(function (card) {
+        function openReportSubpage() {
+          const key = card.getAttribute('data-report-subpage');
+          if (key) {
+            window.location.hash = 'reports-' + key;
+          }
+        }
+        card.addEventListener('click', openReportSubpage);
+        card.addEventListener('keydown', function (event) {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            openReportSubpage();
+          }
+        });
+      });
+
+      reportDetailBackBtn.addEventListener('click', function () {
+        window.location.hash = 'reports';
+      });
+
+      goSignupBtn.addEventListener('click', function () {
+        window.location.hash = 'signup';
+      });
+
+      goFeaturesBtn.addEventListener('click', function () {
+        const section = document.getElementById('homeFeatures');
+        if (section) {
+          section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+
+      homeMenuLinks.forEach(function (link) {
+        link.addEventListener('click', function () {
+          const targetId = link.getAttribute('data-home-target');
+          const section = document.getElementById(targetId);
+          if (section) {
+            section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        });
+      });
+
+      navTargetChips.forEach(function (chip) {
+        chip.addEventListener('click', function () {
+          window.location.hash = chip.getAttribute('data-nav-target');
+        });
+
+        chip.addEventListener('keydown', function (event) {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            window.location.hash = chip.getAttribute('data-nav-target');
+          }
+        });
+      });
+
+      logoutBtn.addEventListener('click', function () {
+        sessionStorage.removeItem(AUTH_KEY);
+        window.location.hash = 'home';
+        showView('home');
+        stopSimulationLoop();
+      });
+
+      emailInput.addEventListener('input', function () {
+        if (emailError.textContent) {
+          emailError.textContent = '';
+        }
+      });
+
+      passwordInput.addEventListener('input', function () {
+        if (passwordError.textContent) {
+          passwordError.textContent = '';
+        }
+      });
+
+      signupEmailInput.addEventListener('input', function () {
+        if (signupEmailError.textContent) {
+          signupEmailError.textContent = '';
+        }
+      });
+
+      signupPasswordInput.addEventListener('input', function () {
+        if (signupPasswordError.textContent) {
+          signupPasswordError.textContent = '';
+        }
+      });
+
+      window.addEventListener('hashchange', routeFromHash);
+      window.addEventListener('resize', function () {
+        if (!reportsView.classList.contains('hidden') || reportsDrawn) {
+          drawReportsCharts();
+        }
+        if (!reportsDetailView.classList.contains('hidden')) {
+          const detailMatch = window.location.hash.match(/^#reports-(performance|operations|sustainability|forecasting)$/);
+          if (detailMatch) {
+            renderReportDetail(detailMatch[1]);
+          }
+        }
+      });
+
+      if (isAuthenticated() && (window.location.hash === '#dashboard' || window.location.hash === '#reports')) {
+        dashUser.textContent = 'Signed in as ' + (emailInput.value.trim() || DEMO_EMAIL);
+      }
+
+      routeFromHash();
+    })();
+  </script>
+</body>
+</html>
