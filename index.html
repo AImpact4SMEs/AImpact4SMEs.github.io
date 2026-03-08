@@ -253,8 +253,9 @@
 
     .home-catchphrase .hero-word {
       display: inline-block;
+      margin: 0;
       opacity: 0;
-      transform: translateY(16px);
+      transform: translateY(20px);
       filter: blur(2px);
     }
 
@@ -759,6 +760,10 @@
       white-space: nowrap;
     }
 
+    .a:visited {
+      color:#102748
+    }
+
     .nav-header-badge {
       display: inline-flex;
       align-items: center;
@@ -768,6 +773,13 @@
       padding: 7px 11px;
       font-size: 0.86rem;
       letter-spacing: 0.02em;
+      color: #1a3f84;
+      text-decoration: none;
+      text-decoration-color: #102748;
+    }
+
+    .nav-header-badge:visited {
+      color: #1a3f84;
     }
 
     .nav-group {
@@ -1528,7 +1540,7 @@
 <body>
   <nav id="globalNavbar" class="page-navbar global-navbar hidden" aria-label="Page navigation">
     <div class="nav-header">
-      <span class="nav-header-badge">AImpact4SMEs</span>
+      <a class="nav-header-badge" href="#home" aria-label="Go to homepage">AImpact4SMEs</a>
     </div>
     <div class="nav-group">
       <span id="navProjectsChip" class="dash-nav-chip active" role="button" tabindex="0" data-nav-target="dashboard" aria-label="Open dashboard">Projects</span>
@@ -1684,7 +1696,7 @@
         <p id="dashUser" class="dash-user">Signed in as admin@aimpact.io</p>
         <p id="dashTimestamp" class="dash-timestamp">Updated: --</p>
       </div>
-      <button id="logoutBtn" type="button" class="btn secondary">Log out</button>
+      
     </header>
 
     <section class="dash-body">
@@ -1779,7 +1791,6 @@
               <div class="mini-box"><strong>Executive Summary</strong><br />Auto-generated weekly brief</div>
             </div>
             <div class="report-actions">
-              <button type="button" class="btn">Build Custom Report</button>
               <button type="button" class="btn secondary">Export PDF</button>
               <button type="button" class="btn secondary">Export Excel</button>
             </div>
@@ -1851,7 +1862,7 @@
 
     <section class="dash-actions">
       <button type="button" class="btn">Approve AI Recommendations</button>
-      <button id="openReportsBtn" type="button" class="btn secondary">Open Full Analytics</button>
+      <button id="openReportsBtn" type="button" class="btn secondary">Open Full Report</button>
       <button type="button" class="btn secondary">Invite Contractor</button>
     </section>
     <p class="mock-disclaimer">
@@ -1974,6 +1985,7 @@
         <h2>Settings</h2>
         <p>Template settings workspace for account preferences, integrations, and governance controls.</p>
       </div>
+      <button id="logoutBtn" type="button" class="btn secondary">Log out</button>
     </header>
     <section class="reports-body">
       <article id="settingsProfileAccess" class="panel-card chart-card">
@@ -2032,6 +2044,12 @@
       const dashTimestamp = document.getElementById('dashTimestamp');
       const logoutBtn = document.getElementById('logoutBtn');
       const openReportsBtn = document.getElementById('openReportsBtn');
+      const exportPdfBtn = Array.from(dashboardView.querySelectorAll('button')).find(function (button) {
+        return button.textContent.trim().toLowerCase() === 'export pdf';
+      });
+      const exportExcelBtn = Array.from(dashboardView.querySelectorAll('button')).find(function (button) {
+        return button.textContent.trim().toLowerCase() === 'export excel';
+      });
       const signupForm = document.getElementById('signupForm');
       const signupStart = document.getElementById('signupStart');
       const signupEmailInput = document.getElementById('signupEmail');
@@ -2967,6 +2985,313 @@
         REPORT_DATA = createRandomReportData();
       }
 
+      function exportDashboardPdf() {
+        const popup = window.open('', '_blank', 'width=1000,height=780');
+        if (!popup) {
+          formMessage.textContent = 'Popup blocked. Allow popups to export PDF.';
+          formMessage.className = 'message error';
+          return;
+        }
+
+        function chartSvgLine(data, labels, strokeColor) {
+          const w = 360;
+          const h = 170;
+          const p = 20;
+          const min = Math.min.apply(null, data);
+          const max = Math.max.apply(null, data);
+          const span = max - min || 1;
+          const points = data.map(function (value, i) {
+            const x = p + (i * (w - (p * 2))) / (data.length - 1);
+            const y = (h - p) - ((value - min) / span) * (h - (p * 2));
+            return { x: x, y: y, v: value, l: labels[i] };
+          });
+          const polyline = points.map(function (pt) { return pt.x + ',' + pt.y; }).join(' ');
+          const markers = points.map(function (pt) {
+            return '<circle cx="' + pt.x + '" cy="' + pt.y + '" r="2.6" fill="' + strokeColor + '"></circle>';
+          }).join('');
+          return '<svg viewBox="0 0 ' + w + ' ' + h + '" preserveAspectRatio="none">' +
+            '<polyline fill="none" stroke="' + strokeColor + '" stroke-width="2.2" points="' + polyline + '"></polyline>' +
+            markers +
+            '</svg>';
+        }
+
+        function chartSvgArea(data, labels, strokeColor, fillColor) {
+          const w = 360;
+          const h = 170;
+          const p = 20;
+          const min = Math.min.apply(null, data);
+          const max = Math.max.apply(null, data);
+          const span = max - min || 1;
+          const points = data.map(function (value, i) {
+            const x = p + (i * (w - (p * 2))) / (data.length - 1);
+            const y = (h - p) - ((value - min) / span) * (h - (p * 2));
+            return { x: x, y: y };
+          });
+          const polyline = points.map(function (pt) { return pt.x + ',' + pt.y; }).join(' ');
+          const areaPath = 'M ' + points[0].x + ' ' + (h - p) + ' L ' +
+            points.map(function (pt) { return pt.x + ' ' + pt.y; }).join(' L ') +
+            ' L ' + points[points.length - 1].x + ' ' + (h - p) + ' Z';
+          return '<svg viewBox="0 0 ' + w + ' ' + h + '" preserveAspectRatio="none">' +
+            '<path d="' + areaPath + '" fill="' + fillColor + '"></path>' +
+            '<polyline fill="none" stroke="' + strokeColor + '" stroke-width="2.2" points="' + polyline + '"></polyline>' +
+            '</svg>';
+        }
+
+        function chartSvgBars(data, labels, barColor) {
+          const w = 360;
+          const h = 170;
+          const p = 20;
+          const max = Math.max.apply(null, data) || 1;
+          const barW = (w - (p * 2)) / data.length - 6;
+          const bars = data.map(function (value, i) {
+            const x = p + i * (barW + 6);
+            const bh = ((h - (p * 2)) * value) / max;
+            const y = (h - p) - bh;
+            return '<rect x="' + x + '" y="' + y + '" width="' + barW + '" height="' + bh + '" fill="' + barColor + '"></rect>';
+          }).join('');
+          return '<svg viewBox="0 0 ' + w + ' ' + h + '" preserveAspectRatio="none">' + bars + '</svg>';
+        }
+
+        function chartSvgDonut(data, colors) {
+          const w = 360;
+          const h = 170;
+          const cx = 180;
+          const cy = 86;
+          const r = 56;
+          const total = data.reduce(function (sum, v) { return sum + v; }, 0) || 1;
+          let start = -Math.PI / 2;
+          const paths = data.map(function (value, i) {
+            const angle = (value / total) * Math.PI * 2;
+            const end = start + angle;
+            const x1 = cx + r * Math.cos(start);
+            const y1 = cy + r * Math.sin(start);
+            const x2 = cx + r * Math.cos(end);
+            const y2 = cy + r * Math.sin(end);
+            const largeArc = angle > Math.PI ? 1 : 0;
+            const d = 'M ' + cx + ' ' + cy + ' L ' + x1 + ' ' + y1 + ' A ' + r + ' ' + r + ' 0 ' + largeArc + ' 1 ' + x2 + ' ' + y2 + ' Z';
+            start = end;
+            return '<path d="' + d + '" fill="' + colors[i] + '"></path>';
+          }).join('');
+          return '<svg viewBox="0 0 ' + w + ' ' + h + '" preserveAspectRatio="none">' +
+            paths +
+            '<circle cx="' + cx + '" cy="' + cy + '" r="30" fill="#f7fafe"></circle>' +
+            '</svg>';
+        }
+
+        const revenueSvg = chartSvgLine(REPORT_DATA.revenueTrend, REPORT_DATA.revenueLabels, '#1d4da1');
+        const costSvg = chartSvgBars(REPORT_DATA.departmentCosts, REPORT_DATA.departmentLabels, '#3c6799');
+        const esgSvg = chartSvgDonut(REPORT_DATA.esgDistribution, ['#1d4da1', '#3c6799', '#6f91bf']);
+        const demandSvg = chartSvgArea(REPORT_DATA.demandProjection, REPORT_DATA.revenueLabels, '#173d80', 'rgba(29,77,161,0.22)');
+        const projectIndex = parseInt((kpiProjectProgressLabel.textContent.match(/\d+/) || ['0'])[0], 10);
+        const budgetIndex = parseInt((kpiBudgetProgressLabel.textContent.match(/\d+/) || ['0'])[0], 10);
+        const riskIndex = parseInt((kpiRiskProgressLabel.textContent.match(/\d+/) || ['0'])[0], 10);
+        const delayProbability = parseInt((riskDelayProbability.textContent.match(/\d+/) || ['0'])[0], 10);
+        const overrunProbability = parseInt((riskBudgetOverrun.textContent.match(/\d+/) || ['0'])[0], 10);
+        const apiHealth = parseFloat((integrationApiHealth.textContent.match(/\d+(\.\d+)?/) || ['0'])[0]);
+        const revenueStart = REPORT_DATA.revenueTrend[0];
+        const revenueEnd = REPORT_DATA.revenueTrend[REPORT_DATA.revenueTrend.length - 1];
+        const revenueGrowth = ((revenueEnd - revenueStart) / revenueStart) * 100;
+        const maxDeptCost = Math.max.apply(null, REPORT_DATA.departmentCosts);
+        const maxDeptIndex = REPORT_DATA.departmentCosts.indexOf(maxDeptCost);
+        const maxDeptLabel = REPORT_DATA.departmentLabels[maxDeptIndex];
+        const maxEsgValue = Math.max.apply(null, REPORT_DATA.esgDistribution);
+        const maxEsgIndex = REPORT_DATA.esgDistribution.indexOf(maxEsgValue);
+        const maxEsgLabel = REPORT_DATA.esgLabels[maxEsgIndex];
+        const demandPeak = Math.max.apply(null, REPORT_DATA.demandProjection);
+        const demandPeakIndex = REPORT_DATA.demandProjection.indexOf(demandPeak);
+        const demandLow = Math.min.apply(null, REPORT_DATA.demandProjection);
+        const demandLowIndex = REPORT_DATA.demandProjection.indexOf(demandLow);
+        const demandPeakMonth = REPORT_DATA.revenueLabels[demandPeakIndex];
+        const demandLowMonth = REPORT_DATA.revenueLabels[demandLowIndex];
+
+        const narrativeSets = [
+          {
+            heading: 'Operational Snapshot',
+            paragraphs: [
+              'The portfolio on-track index is currently ' + projectIndex + '%, indicating the overall delivery posture for active workstreams.',
+              'Budget utilization is running at ' + budgetIndex + '%, which reflects the current spend profile versus planned allocation.',
+              'Risk control score is ' + riskIndex + '/100, summarizing current exposure across schedule, cost, and execution dimensions.',
+              'Delay probability is estimated at ' + delayProbability + '%, providing a directional indicator for near-term schedule pressure.',
+              'Budget overrun likelihood is ' + overrunProbability + '%, supporting threshold-based monitoring in upcoming review cycles.'
+            ]
+          },
+          {
+            heading: 'Cost and Control Interpretation',
+            paragraphs: [
+              'The current budget-versus-actual position of ' + costBudgetActual.textContent + ' indicates the operating cost baseline in this cycle.',
+              'Labor trend is ' + costLaborTrend.textContent + ', showing the short-window movement in workforce-related spend.',
+              'Material index reads ' + costMaterialIndex.textContent + ', which should be interpreted together with procurement timing decisions.',
+              'The highest departmental cost is in ' + maxDeptLabel + ' at approximately $' + maxDeptCost + 'k for this reporting sample.',
+              'API health at ' + apiHealth.toFixed(1) + '% indicates stable integration continuity for connected data pipelines.'
+            ]
+          },
+          {
+            heading: 'Trend and Distribution Signals',
+            paragraphs: [
+              'Revenue moved from $' + revenueStart.toFixed(2) + 'M to $' + revenueEnd.toFixed(2) + 'M, a change of ' + revenueGrowth.toFixed(1) + '% over the measured period.',
+              'Bar chart concentration suggests spending intensity is not evenly distributed across operational categories.',
+              'The dominant ESG component is ' + maxEsgLabel + ' at ' + maxEsgValue + '%, indicating current weighting in sustainability reporting.',
+              'Demand peaks at ' + demandPeak + ' in ' + demandPeakMonth + ', signaling the likely high-load segment for capacity planning.',
+              'Demand trough is ' + demandLow + ' in ' + demandLowMonth + ', which can be used as a window for lower-impact interventions.'
+            ]
+          },
+          {
+            heading: 'Planning and Follow-up Guidance',
+            paragraphs: [
+              'Where risk and budget indicators move in parallel, mitigation should prioritize schedule-critical activities first.',
+              'Monitoring cadence should increase when delay and overrun values remain elevated across consecutive snapshots.',
+              'Resource and procurement actions are most effective when aligned to the forecast peak period identified above.',
+              'Cross-team review should confirm that trend changes are linked to explicit execution decisions and not reporting lag.',
+              'This export should be used as a comparative baseline for the next reporting cycle to validate intervention impact.'
+            ]
+          }
+        ];
+        const narrativeHtml = narrativeSets.map(function (set) {
+          const text = set.paragraphs.map(function (paragraph) {
+            return '<p class="narrative-p">' + paragraph + '</p>';
+          }).join('');
+          return '<section class="narrative-block"><h2>' + set.heading + '</h2>' + text + '</section>';
+        });
+
+        const reportHtml = '<!doctype html><html><head><meta charset="utf-8"><title>AImpact4SMEs Dashboard Export</title>' +
+          '<style>' +
+          'body{font-family:Arial,Helvetica,sans-serif;margin:28px;color:#15253a;}' +
+          'h1{margin:0 0 8px;font-size:22px;} h2{margin:20px 0 8px;font-size:16px;}' +
+          '.meta{color:#4a5f79;font-size:12px;margin:0 0 4px;}' +
+          '.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}' +
+          '.card{border:1px solid #c0ccdb;padding:10px;border-radius:4px;background:#f7fafe;}' +
+          '.label{font-size:12px;color:#4a5f79;margin-bottom:4px;}' +
+          '.value{font-size:14px;font-weight:700;}' +
+          '.charts{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px;}' +
+          '.chart{border:1px solid #c0ccdb;border-radius:4px;background:#f7fafe;padding:8px;}' +
+          '.chart h3{margin:0 0 8px;font-size:13px;color:#21466f;}' +
+          '.chart svg{width:100%;height:170px;display:block;background:#edf3ff;border-radius:3px;}' +
+          '.narrative-block{margin-top:14px;padding:10px;border:1px solid #c0ccdb;border-radius:4px;background:#fcfdff;}' +
+          '.narrative-p{margin:0 0 8px;font-size:12px;line-height:1.45;color:#2a4568;}' +
+          '</style></head><body>' +
+          '<h1>AImpact4SMEs Dashboard Report</h1>' +
+          '<p class="meta">' + dashUser.textContent + '</p>' +
+          '<p class="meta">' + dashTimestamp.textContent + '</p>' +
+          '<h2>Core KPI Snapshot</h2>' +
+          '<div class="grid">' +
+            '<div class="card"><div class="label">Project Status</div><div class="value">' + kpiProjectProgressLabel.textContent + '</div><div>' + kpiProjectDetail.textContent + '</div></div>' +
+            '<div class="card"><div class="label">Budget Health</div><div class="value">' + kpiBudgetProgressLabel.textContent + '</div><div>' + kpiBudgetDetail.textContent + '</div></div>' +
+            '<div class="card"><div class="label">Risk Score</div><div class="value">' + kpiRiskProgressLabel.textContent + '</div><div>' + kpiRiskDetail.textContent + '</div></div>' +
+            '<div class="card"><div class="label">Delay Probability</div><div class="value">' + riskDelayProbability.textContent + '</div><div>Budget Overrun: ' + riskBudgetOverrun.textContent + '</div></div>' +
+          '</div>' +
+          narrativeHtml[0] +
+          '<h2>Cost and Integration</h2>' +
+          '<div class="grid">' +
+            '<div class="card"><div class="label">Budget vs Actual</div><div class="value">' + costBudgetActual.textContent + '</div><div>Labor: ' + costLaborTrend.textContent + '</div></div>' +
+            '<div class="card"><div class="label">Material Index</div><div class="value">' + costMaterialIndex.textContent + '</div><div>Procurement: ' + costProcurementBenchmark.textContent + '</div></div>' +
+            '<div class="card"><div class="label">API Health</div><div class="value">' + integrationApiHealth.textContent + '</div><div>Last Sync: ' + integrationLastSync.textContent + '</div></div>' +
+            '<div class="card"><div class="label">Executive ROI</div><div class="value">' + execRoi.textContent + '</div><div>On-time Delivery: ' + execOnTime.textContent + '</div></div>' +
+          '</div>' +
+          narrativeHtml[1] +
+          '<h2>Reports Graphs</h2>' +
+          '<div class="charts">' +
+            '<div class="chart"><h3>Monthly Revenue Trend</h3>' + revenueSvg + '</div>' +
+            '<div class="chart"><h3>Department Cost Breakdown</h3>' + costSvg + '</div>' +
+          '</div>' +
+          narrativeHtml[2] +
+          '<div class="charts">' +
+            '<div class="chart"><h3>ESG Distribution Index</h3>' + esgSvg + '</div>' +
+            '<div class="chart"><h3>Demand Projection Curve</h3>' + demandSvg + '</div>' +
+          '</div>' +
+          narrativeHtml[3] +
+          '<p class="meta" style="margin-top:18px;">Generated: ' + new Date().toLocaleString() + '</p>' +
+          '</body></html>';
+
+        popup.document.open();
+        popup.document.write(reportHtml);
+        popup.document.close();
+        popup.focus();
+        setTimeout(function () {
+          popup.print();
+        }, 250);
+      }
+
+      function exportDashboardExcel() {
+        function escapeXml(value) {
+          return String(value)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&apos;');
+        }
+
+        function xmlCell(value) {
+          const isNumber = typeof value === 'number' && Number.isFinite(value);
+          const type = isNumber ? 'Number' : 'String';
+          return '<Cell><Data ss:Type="' + type + '">' + escapeXml(value) + '</Data></Cell>';
+        }
+
+        function xmlRow(values) {
+          return '<Row>' + values.map(xmlCell).join('') + '</Row>';
+        }
+
+        function xmlWorksheet(name, headers, rows) {
+          const headerRow = xmlRow(headers);
+          const bodyRows = rows.map(xmlRow).join('');
+          return '<Worksheet ss:Name="' + escapeXml(name) + '"><Table>' + headerRow + bodyRows + '</Table></Worksheet>';
+        }
+
+        const revenueRows = REPORT_DATA.revenueLabels.map(function (label, index) {
+          return [label, REPORT_DATA.revenueTrend[index], REPORT_DATA.demandProjection[index]];
+        });
+
+        const costRows = REPORT_DATA.departmentLabels.map(function (label, index) {
+          return [label, REPORT_DATA.departmentCosts[index]];
+        });
+
+        const esgRows = REPORT_DATA.esgLabels.map(function (label, index) {
+          return [label, REPORT_DATA.esgDistribution[index]];
+        });
+
+        const snapshotRows = [
+          ['Signed In User', dashUser.textContent],
+          ['Last Dashboard Update', dashTimestamp.textContent],
+          ['Project Progress', kpiProjectProgressLabel.textContent],
+          ['Project Detail', kpiProjectDetail.textContent],
+          ['Budget Progress', kpiBudgetProgressLabel.textContent],
+          ['Budget Detail', kpiBudgetDetail.textContent],
+          ['Risk Progress', kpiRiskProgressLabel.textContent],
+          ['Risk Detail', kpiRiskDetail.textContent],
+          ['Budget vs Actual', costBudgetActual.textContent],
+          ['Labor Cost Trend', costLaborTrend.textContent],
+          ['Material Price Index', costMaterialIndex.textContent],
+          ['Delay Probability', riskDelayProbability.textContent],
+          ['Budget Overrun Likelihood', riskBudgetOverrun.textContent],
+          ['Generated At', new Date().toLocaleString()]
+        ];
+
+        const workbookXml =
+          '<?xml version="1.0"?>' +
+          '<?mso-application progid="Excel.Sheet"?>' +
+          '<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" ' +
+          'xmlns:o="urn:schemas-microsoft-com:office:office" ' +
+          'xmlns:x="urn:schemas-microsoft-com:office:excel" ' +
+          'xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet" ' +
+          'xmlns:html="http://www.w3.org/TR/REC-html40">' +
+          xmlWorksheet('KPI Snapshot', ['Field', 'Value'], snapshotRows) +
+          xmlWorksheet('Revenue and Demand', ['Month', 'Revenue (M)', 'Demand Index'], revenueRows) +
+          xmlWorksheet('Department Costs', ['Department', 'Cost (k)'], costRows) +
+          xmlWorksheet('ESG Distribution', ['Category', 'Percent'], esgRows) +
+          '</Workbook>';
+
+        const blob = new Blob([workbookXml], { type: 'application/vnd.ms-excel;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        const stamp = new Date().toISOString().replace(/[:.]/g, '-');
+        link.href = url;
+        link.download = 'AImpact4SMEs_report_' + stamp + '.xls';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+      }
+
       function createSvgElement(tagName) {
         return document.createElementNS('http://www.w3.org/2000/svg', tagName);
       }
@@ -3384,6 +3709,14 @@
       openReportsBtn.addEventListener('click', function () {
         window.location.hash = 'reports';
       });
+
+      if (exportPdfBtn) {
+        exportPdfBtn.addEventListener('click', exportDashboardPdf);
+      }
+
+      if (exportExcelBtn) {
+        exportExcelBtn.addEventListener('click', exportDashboardExcel);
+      }
 
       reportLaunchCards.forEach(function (card) {
         function openReportSubpage() {
